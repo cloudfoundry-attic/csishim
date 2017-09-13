@@ -4,7 +4,8 @@ package csi_fake
 import (
 	"sync"
 
-	"github.com/cloudfoundry/csishim"
+	"code.cloudfoundry.org/csishim"
+	"code.cloudfoundry.org/goshims/grpcshim"
 	"github.com/container-storage-interface/spec/lib/go/csi"
 	"google.golang.org/grpc"
 )
@@ -38,10 +39,10 @@ type FakeCsi struct {
 		s   *grpc.Server
 		srv csi.ControllerServer
 	}
-	NewNodeClientStub        func(cc *grpc.ClientConn) csi.NodeClient
+	NewNodeClientStub        func(cc grpcshim.ClientConn) csi.NodeClient
 	newNodeClientMutex       sync.RWMutex
 	newNodeClientArgsForCall []struct {
-		cc *grpc.ClientConn
+		cc grpcshim.ClientConn
 	}
 	newNodeClientReturns struct {
 		result1 csi.NodeClient
@@ -170,10 +171,10 @@ func (fake *FakeCsi) RegisterControllerServerArgsForCall(i int) (*grpc.Server, c
 	return fake.registerControllerServerArgsForCall[i].s, fake.registerControllerServerArgsForCall[i].srv
 }
 
-func (fake *FakeCsi) NewNodeClient(cc *grpc.ClientConn) csi.NodeClient {
+func (fake *FakeCsi) NewNodeClient(cc grpcshim.ClientConn) csi.NodeClient {
 	fake.newNodeClientMutex.Lock()
 	fake.newNodeClientArgsForCall = append(fake.newNodeClientArgsForCall, struct {
-		cc *grpc.ClientConn
+		cc grpcshim.ClientConn
 	}{cc})
 	fake.recordInvocation("NewNodeClient", []interface{}{cc})
 	fake.newNodeClientMutex.Unlock()
@@ -189,7 +190,7 @@ func (fake *FakeCsi) NewNodeClientCallCount() int {
 	return len(fake.newNodeClientArgsForCall)
 }
 
-func (fake *FakeCsi) NewNodeClientArgsForCall(i int) *grpc.ClientConn {
+func (fake *FakeCsi) NewNodeClientArgsForCall(i int) grpcshim.ClientConn {
 	fake.newNodeClientMutex.RLock()
 	defer fake.newNodeClientMutex.RUnlock()
 	return fake.newNodeClientArgsForCall[i].cc

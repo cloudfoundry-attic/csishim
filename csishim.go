@@ -5,6 +5,7 @@ package csishim
 import (
 	"github.com/container-storage-interface/spec/lib/go/csi"
 	"google.golang.org/grpc"
+	"code.cloudfoundry.org/goshims/grpcshim"
 )
 
 type CsiShim struct{}
@@ -25,8 +26,8 @@ func (sh *CsiShim) RegisterControllerServer(s *grpc.Server, srv csi.ControllerSe
 	csi.RegisterControllerServer(s, srv)
 }
 
-func (sh *CsiShim) NewNodeClient(cc *grpc.ClientConn) csi.NodeClient {
-	return csi.NewNodeClient(cc)
+func (sh *CsiShim) NewNodeClient(conn grpcshim.ClientConn) csi.NodeClient {
+	return csi.NewNodeClient(conn.(*grpcshim.ClientConnShim).ClientConn)
 }
 
 func (sh *CsiShim) RegisterNodeServer(s *grpc.Server, srv csi.NodeServer) {

@@ -5,6 +5,7 @@ package csishim
 import (
 	"github.com/container-storage-interface/spec/lib/go/csi"
 	"google.golang.org/grpc"
+	"code.cloudfoundry.org/goshims/grpcshim"
 )
 
 //go:generate counterfeiter -o csi_fake/fake_csi.go . Csi
@@ -13,6 +14,6 @@ type Csi interface {
 	RegisterIdentityServer(s *grpc.Server, srv csi.IdentityServer)
 	NewControllerClient(cc *grpc.ClientConn) csi.ControllerClient
 	RegisterControllerServer(s *grpc.Server, srv csi.ControllerServer)
-	NewNodeClient(cc *grpc.ClientConn) csi.NodeClient
+	NewNodeClient(cc grpcshim.ClientConn) csi.NodeClient
 	RegisterNodeServer(s *grpc.Server, srv csi.NodeServer)
 }
