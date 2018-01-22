@@ -8,9 +8,11 @@ import (
 	"code.cloudfoundry.org/goshims/grpcshim"
 )
 
+var CsiVersion = csi.Version{Major: 0, Minor: 1, Patch: 0}
+
 //go:generate counterfeiter -o csi_fake/fake_csi.go . Csi
 type Csi interface {
-	NewIdentityClient(cc *grpc.ClientConn) csi.IdentityClient
+	NewIdentityClient(cc grpcshim.ClientConn) csi.IdentityClient
 	RegisterIdentityServer(s *grpc.Server, srv csi.IdentityServer)
 	NewControllerClient(cc *grpc.ClientConn) csi.ControllerClient
 	RegisterControllerServer(s *grpc.Server, srv csi.ControllerServer)

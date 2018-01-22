@@ -10,8 +10,8 @@ import (
 
 type CsiShim struct{}
 
-func (sh *CsiShim) NewIdentityClient(cc *grpc.ClientConn) csi.IdentityClient {
-	return csi.NewIdentityClient(cc)
+func (sh *CsiShim) NewIdentityClient(conn grpcshim.ClientConn) csi.IdentityClient {
+	return csi.NewIdentityClient(conn.(*grpcshim.ClientConnShim).ClientConn)
 }
 
 func (sh *CsiShim) RegisterIdentityServer(s *grpc.Server, srv csi.IdentityServer) {

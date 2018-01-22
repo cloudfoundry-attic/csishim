@@ -11,10 +11,10 @@ import (
 )
 
 type FakeCsi struct {
-	NewIdentityClientStub        func(cc *grpc.ClientConn) csi.IdentityClient
+	NewIdentityClientStub        func(cc grpcshim.ClientConn) csi.IdentityClient
 	newIdentityClientMutex       sync.RWMutex
 	newIdentityClientArgsForCall []struct {
-		cc *grpc.ClientConn
+		cc grpcshim.ClientConn
 	}
 	newIdentityClientReturns struct {
 		result1 csi.IdentityClient
@@ -66,11 +66,11 @@ type FakeCsi struct {
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *FakeCsi) NewIdentityClient(cc *grpc.ClientConn) csi.IdentityClient {
+func (fake *FakeCsi) NewIdentityClient(cc grpcshim.ClientConn) csi.IdentityClient {
 	fake.newIdentityClientMutex.Lock()
 	ret, specificReturn := fake.newIdentityClientReturnsOnCall[len(fake.newIdentityClientArgsForCall)]
 	fake.newIdentityClientArgsForCall = append(fake.newIdentityClientArgsForCall, struct {
-		cc *grpc.ClientConn
+		cc grpcshim.ClientConn
 	}{cc})
 	fake.recordInvocation("NewIdentityClient", []interface{}{cc})
 	fake.newIdentityClientMutex.Unlock()
@@ -89,7 +89,7 @@ func (fake *FakeCsi) NewIdentityClientCallCount() int {
 	return len(fake.newIdentityClientArgsForCall)
 }
 
-func (fake *FakeCsi) NewIdentityClientArgsForCall(i int) *grpc.ClientConn {
+func (fake *FakeCsi) NewIdentityClientArgsForCall(i int) grpcshim.ClientConn {
 	fake.newIdentityClientMutex.RLock()
 	defer fake.newIdentityClientMutex.RUnlock()
 	return fake.newIdentityClientArgsForCall[i].cc
