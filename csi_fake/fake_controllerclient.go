@@ -4,7 +4,7 @@ package csi_fake
 import (
 	"sync"
 
-	"github.com/container-storage-interface/spec/lib/go/csi"
+	csi "github.com/container-storage-interface/spec/lib/go/csi/v0"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )
@@ -113,21 +113,6 @@ type FakeControllerClient struct {
 	}
 	getCapacityReturnsOnCall map[int]struct {
 		result1 *csi.GetCapacityResponse
-		result2 error
-	}
-	ControllerProbeStub        func(ctx context.Context, in *csi.ControllerProbeRequest, opts ...grpc.CallOption) (*csi.ControllerProbeResponse, error)
-	controllerProbeMutex       sync.RWMutex
-	controllerProbeArgsForCall []struct {
-		ctx  context.Context
-		in   *csi.ControllerProbeRequest
-		opts []grpc.CallOption
-	}
-	controllerProbeReturns struct {
-		result1 *csi.ControllerProbeResponse
-		result2 error
-	}
-	controllerProbeReturnsOnCall map[int]struct {
-		result1 *csi.ControllerProbeResponse
 		result2 error
 	}
 	ControllerGetCapabilitiesStub        func(ctx context.Context, in *csi.ControllerGetCapabilitiesRequest, opts ...grpc.CallOption) (*csi.ControllerGetCapabilitiesResponse, error)
@@ -520,59 +505,6 @@ func (fake *FakeControllerClient) GetCapacityReturnsOnCall(i int, result1 *csi.G
 	}{result1, result2}
 }
 
-func (fake *FakeControllerClient) ControllerProbe(ctx context.Context, in *csi.ControllerProbeRequest, opts ...grpc.CallOption) (*csi.ControllerProbeResponse, error) {
-	fake.controllerProbeMutex.Lock()
-	ret, specificReturn := fake.controllerProbeReturnsOnCall[len(fake.controllerProbeArgsForCall)]
-	fake.controllerProbeArgsForCall = append(fake.controllerProbeArgsForCall, struct {
-		ctx  context.Context
-		in   *csi.ControllerProbeRequest
-		opts []grpc.CallOption
-	}{ctx, in, opts})
-	fake.recordInvocation("ControllerProbe", []interface{}{ctx, in, opts})
-	fake.controllerProbeMutex.Unlock()
-	if fake.ControllerProbeStub != nil {
-		return fake.ControllerProbeStub(ctx, in, opts...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.controllerProbeReturns.result1, fake.controllerProbeReturns.result2
-}
-
-func (fake *FakeControllerClient) ControllerProbeCallCount() int {
-	fake.controllerProbeMutex.RLock()
-	defer fake.controllerProbeMutex.RUnlock()
-	return len(fake.controllerProbeArgsForCall)
-}
-
-func (fake *FakeControllerClient) ControllerProbeArgsForCall(i int) (context.Context, *csi.ControllerProbeRequest, []grpc.CallOption) {
-	fake.controllerProbeMutex.RLock()
-	defer fake.controllerProbeMutex.RUnlock()
-	return fake.controllerProbeArgsForCall[i].ctx, fake.controllerProbeArgsForCall[i].in, fake.controllerProbeArgsForCall[i].opts
-}
-
-func (fake *FakeControllerClient) ControllerProbeReturns(result1 *csi.ControllerProbeResponse, result2 error) {
-	fake.ControllerProbeStub = nil
-	fake.controllerProbeReturns = struct {
-		result1 *csi.ControllerProbeResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeControllerClient) ControllerProbeReturnsOnCall(i int, result1 *csi.ControllerProbeResponse, result2 error) {
-	fake.ControllerProbeStub = nil
-	if fake.controllerProbeReturnsOnCall == nil {
-		fake.controllerProbeReturnsOnCall = make(map[int]struct {
-			result1 *csi.ControllerProbeResponse
-			result2 error
-		})
-	}
-	fake.controllerProbeReturnsOnCall[i] = struct {
-		result1 *csi.ControllerProbeResponse
-		result2 error
-	}{result1, result2}
-}
-
 func (fake *FakeControllerClient) ControllerGetCapabilities(ctx context.Context, in *csi.ControllerGetCapabilitiesRequest, opts ...grpc.CallOption) (*csi.ControllerGetCapabilitiesResponse, error) {
 	fake.controllerGetCapabilitiesMutex.Lock()
 	ret, specificReturn := fake.controllerGetCapabilitiesReturnsOnCall[len(fake.controllerGetCapabilitiesArgsForCall)]
@@ -643,8 +575,6 @@ func (fake *FakeControllerClient) Invocations() map[string][][]interface{} {
 	defer fake.listVolumesMutex.RUnlock()
 	fake.getCapacityMutex.RLock()
 	defer fake.getCapacityMutex.RUnlock()
-	fake.controllerProbeMutex.RLock()
-	defer fake.controllerProbeMutex.RUnlock()
 	fake.controllerGetCapabilitiesMutex.RLock()
 	defer fake.controllerGetCapabilitiesMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}

@@ -6,7 +6,7 @@ import (
 
 	"code.cloudfoundry.org/csishim"
 	"code.cloudfoundry.org/goshims/grpcshim"
-	"github.com/container-storage-interface/spec/lib/go/csi"
+	"github.com/container-storage-interface/spec/lib/go/csi/v0"
 	"google.golang.org/grpc"
 )
 

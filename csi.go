@@ -3,12 +3,10 @@
 package csishim
 
 import (
-	"github.com/container-storage-interface/spec/lib/go/csi"
-	"google.golang.org/grpc"
 	"code.cloudfoundry.org/goshims/grpcshim"
+	"github.com/container-storage-interface/spec/lib/go/csi/v0"
+	"google.golang.org/grpc"
 )
-
-var CsiVersion = csi.Version{Major: 0, Minor: 1, Patch: 0}
 
 //go:generate counterfeiter -o csi_fake/fake_csi.go . Csi
 type Csi interface {

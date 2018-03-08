@@ -3,9 +3,9 @@
 package csishim
 
 import (
-	"github.com/container-storage-interface/spec/lib/go/csi"
-	"google.golang.org/grpc"
 	"code.cloudfoundry.org/goshims/grpcshim"
+	"github.com/container-storage-interface/spec/lib/go/csi/v0"
+	"google.golang.org/grpc"
 )
 
 type CsiShim struct{}

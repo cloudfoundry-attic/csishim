@@ -4,27 +4,12 @@ package csi_fake
 import (
 	"sync"
 
-	"github.com/container-storage-interface/spec/lib/go/csi"
+	csi "github.com/container-storage-interface/spec/lib/go/csi/v0"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )
 
 type FakeIdentityClient struct {
-	GetSupportedVersionsStub        func(ctx context.Context, in *csi.GetSupportedVersionsRequest, opts ...grpc.CallOption) (*csi.GetSupportedVersionsResponse, error)
-	getSupportedVersionsMutex       sync.RWMutex
-	getSupportedVersionsArgsForCall []struct {
-		ctx  context.Context
-		in   *csi.GetSupportedVersionsRequest
-		opts []grpc.CallOption
-	}
-	getSupportedVersionsReturns struct {
-		result1 *csi.GetSupportedVersionsResponse
-		result2 error
-	}
-	getSupportedVersionsReturnsOnCall map[int]struct {
-		result1 *csi.GetSupportedVersionsResponse
-		result2 error
-	}
 	GetPluginInfoStub        func(ctx context.Context, in *csi.GetPluginInfoRequest, opts ...grpc.CallOption) (*csi.GetPluginInfoResponse, error)
 	getPluginInfoMutex       sync.RWMutex
 	getPluginInfoArgsForCall []struct {
@@ -40,61 +25,38 @@ type FakeIdentityClient struct {
 		result1 *csi.GetPluginInfoResponse
 		result2 error
 	}
+	GetPluginCapabilitiesStub        func(ctx context.Context, in *csi.GetPluginCapabilitiesRequest, opts ...grpc.CallOption) (*csi.GetPluginCapabilitiesResponse, error)
+	getPluginCapabilitiesMutex       sync.RWMutex
+	getPluginCapabilitiesArgsForCall []struct {
+		ctx  context.Context
+		in   *csi.GetPluginCapabilitiesRequest
+		opts []grpc.CallOption
+	}
+	getPluginCapabilitiesReturns struct {
+		result1 *csi.GetPluginCapabilitiesResponse
+		result2 error
+	}
+	getPluginCapabilitiesReturnsOnCall map[int]struct {
+		result1 *csi.GetPluginCapabilitiesResponse
+		result2 error
+	}
+	ProbeStub        func(ctx context.Context, in *csi.ProbeRequest, opts ...grpc.CallOption) (*csi.ProbeResponse, error)
+	probeMutex       sync.RWMutex
+	probeArgsForCall []struct {
+		ctx  context.Context
+		in   *csi.ProbeRequest
+		opts []grpc.CallOption
+	}
+	probeReturns struct {
+		result1 *csi.ProbeResponse
+		result2 error
+	}
+	probeReturnsOnCall map[int]struct {
+		result1 *csi.ProbeResponse
+		result2 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
-}
-
-func (fake *FakeIdentityClient) GetSupportedVersions(ctx context.Context, in *csi.GetSupportedVersionsRequest, opts ...grpc.CallOption) (*csi.GetSupportedVersionsResponse, error) {
-	fake.getSupportedVersionsMutex.Lock()
-	ret, specificReturn := fake.getSupportedVersionsReturnsOnCall[len(fake.getSupportedVersionsArgsForCall)]
-	fake.getSupportedVersionsArgsForCall = append(fake.getSupportedVersionsArgsForCall, struct {
-		ctx  context.Context
-		in   *csi.GetSupportedVersionsRequest
-		opts []grpc.CallOption
-	}{ctx, in, opts})
-	fake.recordInvocation("GetSupportedVersions", []interface{}{ctx, in, opts})
-	fake.getSupportedVersionsMutex.Unlock()
-	if fake.GetSupportedVersionsStub != nil {
-		return fake.GetSupportedVersionsStub(ctx, in, opts...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.getSupportedVersionsReturns.result1, fake.getSupportedVersionsReturns.result2
-}
-
-func (fake *FakeIdentityClient) GetSupportedVersionsCallCount() int {
-	fake.getSupportedVersionsMutex.RLock()
-	defer fake.getSupportedVersionsMutex.RUnlock()
-	return len(fake.getSupportedVersionsArgsForCall)
-}
-
-func (fake *FakeIdentityClient) GetSupportedVersionsArgsForCall(i int) (context.Context, *csi.GetSupportedVersionsRequest, []grpc.CallOption) {
-	fake.getSupportedVersionsMutex.RLock()
-	defer fake.getSupportedVersionsMutex.RUnlock()
-	return fake.getSupportedVersionsArgsForCall[i].ctx, fake.getSupportedVersionsArgsForCall[i].in, fake.getSupportedVersionsArgsForCall[i].opts
-}
-
-func (fake *FakeIdentityClient) GetSupportedVersionsReturns(result1 *csi.GetSupportedVersionsResponse, result2 error) {
-	fake.GetSupportedVersionsStub = nil
-	fake.getSupportedVersionsReturns = struct {
-		result1 *csi.GetSupportedVersionsResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeIdentityClient) GetSupportedVersionsReturnsOnCall(i int, result1 *csi.GetSupportedVersionsResponse, result2 error) {
-	fake.GetSupportedVersionsStub = nil
-	if fake.getSupportedVersionsReturnsOnCall == nil {
-		fake.getSupportedVersionsReturnsOnCall = make(map[int]struct {
-			result1 *csi.GetSupportedVersionsResponse
-			result2 error
-		})
-	}
-	fake.getSupportedVersionsReturnsOnCall[i] = struct {
-		result1 *csi.GetSupportedVersionsResponse
-		result2 error
-	}{result1, result2}
 }
 
 func (fake *FakeIdentityClient) GetPluginInfo(ctx context.Context, in *csi.GetPluginInfoRequest, opts ...grpc.CallOption) (*csi.GetPluginInfoResponse, error) {
@@ -150,13 +112,121 @@ func (fake *FakeIdentityClient) GetPluginInfoReturnsOnCall(i int, result1 *csi.G
 	}{result1, result2}
 }
 
+func (fake *FakeIdentityClient) GetPluginCapabilities(ctx context.Context, in *csi.GetPluginCapabilitiesRequest, opts ...grpc.CallOption) (*csi.GetPluginCapabilitiesResponse, error) {
+	fake.getPluginCapabilitiesMutex.Lock()
+	ret, specificReturn := fake.getPluginCapabilitiesReturnsOnCall[len(fake.getPluginCapabilitiesArgsForCall)]
+	fake.getPluginCapabilitiesArgsForCall = append(fake.getPluginCapabilitiesArgsForCall, struct {
+		ctx  context.Context
+		in   *csi.GetPluginCapabilitiesRequest
+		opts []grpc.CallOption
+	}{ctx, in, opts})
+	fake.recordInvocation("GetPluginCapabilities", []interface{}{ctx, in, opts})
+	fake.getPluginCapabilitiesMutex.Unlock()
+	if fake.GetPluginCapabilitiesStub != nil {
+		return fake.GetPluginCapabilitiesStub(ctx, in, opts...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fake.getPluginCapabilitiesReturns.result1, fake.getPluginCapabilitiesReturns.result2
+}
+
+func (fake *FakeIdentityClient) GetPluginCapabilitiesCallCount() int {
+	fake.getPluginCapabilitiesMutex.RLock()
+	defer fake.getPluginCapabilitiesMutex.RUnlock()
+	return len(fake.getPluginCapabilitiesArgsForCall)
+}
+
+func (fake *FakeIdentityClient) GetPluginCapabilitiesArgsForCall(i int) (context.Context, *csi.GetPluginCapabilitiesRequest, []grpc.CallOption) {
+	fake.getPluginCapabilitiesMutex.RLock()
+	defer fake.getPluginCapabilitiesMutex.RUnlock()
+	return fake.getPluginCapabilitiesArgsForCall[i].ctx, fake.getPluginCapabilitiesArgsForCall[i].in, fake.getPluginCapabilitiesArgsForCall[i].opts
+}
+
+func (fake *FakeIdentityClient) GetPluginCapabilitiesReturns(result1 *csi.GetPluginCapabilitiesResponse, result2 error) {
+	fake.GetPluginCapabilitiesStub = nil
+	fake.getPluginCapabilitiesReturns = struct {
+		result1 *csi.GetPluginCapabilitiesResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeIdentityClient) GetPluginCapabilitiesReturnsOnCall(i int, result1 *csi.GetPluginCapabilitiesResponse, result2 error) {
+	fake.GetPluginCapabilitiesStub = nil
+	if fake.getPluginCapabilitiesReturnsOnCall == nil {
+		fake.getPluginCapabilitiesReturnsOnCall = make(map[int]struct {
+			result1 *csi.GetPluginCapabilitiesResponse
+			result2 error
+		})
+	}
+	fake.getPluginCapabilitiesReturnsOnCall[i] = struct {
+		result1 *csi.GetPluginCapabilitiesResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeIdentityClient) Probe(ctx context.Context, in *csi.ProbeRequest, opts ...grpc.CallOption) (*csi.ProbeResponse, error) {
+	fake.probeMutex.Lock()
+	ret, specificReturn := fake.probeReturnsOnCall[len(fake.probeArgsForCall)]
+	fake.probeArgsForCall = append(fake.probeArgsForCall, struct {
+		ctx  context.Context
+		in   *csi.ProbeRequest
+		opts []grpc.CallOption
+	}{ctx, in, opts})
+	fake.recordInvocation("Probe", []interface{}{ctx, in, opts})
+	fake.probeMutex.Unlock()
+	if fake.ProbeStub != nil {
+		return fake.ProbeStub(ctx, in, opts...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fake.probeReturns.result1, fake.probeReturns.result2
+}
+
+func (fake *FakeIdentityClient) ProbeCallCount() int {
+	fake.probeMutex.RLock()
+	defer fake.probeMutex.RUnlock()
+	return len(fake.probeArgsForCall)
+}
+
+func (fake *FakeIdentityClient) ProbeArgsForCall(i int) (context.Context, *csi.ProbeRequest, []grpc.CallOption) {
+	fake.probeMutex.RLock()
+	defer fake.probeMutex.RUnlock()
+	return fake.probeArgsForCall[i].ctx, fake.probeArgsForCall[i].in, fake.probeArgsForCall[i].opts
+}
+
+func (fake *FakeIdentityClient) ProbeReturns(result1 *csi.ProbeResponse, result2 error) {
+	fake.ProbeStub = nil
+	fake.probeReturns = struct {
+		result1 *csi.ProbeResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeIdentityClient) ProbeReturnsOnCall(i int, result1 *csi.ProbeResponse, result2 error) {
+	fake.ProbeStub = nil
+	if fake.probeReturnsOnCall == nil {
+		fake.probeReturnsOnCall = make(map[int]struct {
+			result1 *csi.ProbeResponse
+			result2 error
+		})
+	}
+	fake.probeReturnsOnCall[i] = struct {
+		result1 *csi.ProbeResponse
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeIdentityClient) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
-	fake.getSupportedVersionsMutex.RLock()
-	defer fake.getSupportedVersionsMutex.RUnlock()
 	fake.getPluginInfoMutex.RLock()
 	defer fake.getPluginInfoMutex.RUnlock()
+	fake.getPluginCapabilitiesMutex.RLock()
+	defer fake.getPluginCapabilitiesMutex.RUnlock()
+	fake.probeMutex.RLock()
+	defer fake.probeMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value
