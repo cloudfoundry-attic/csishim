@@ -28,10 +28,10 @@ type FakeCsi struct {
 		s   *grpc.Server
 		srv csi.IdentityServer
 	}
-	NewControllerClientStub        func(cc *grpc.ClientConn) csi.ControllerClient
+	NewControllerClientStub        func(cc grpcshim.ClientConn) csi.ControllerClient
 	newControllerClientMutex       sync.RWMutex
 	newControllerClientArgsForCall []struct {
-		cc *grpc.ClientConn
+		cc grpcshim.ClientConn
 	}
 	newControllerClientReturns struct {
 		result1 csi.ControllerClient
@@ -139,11 +139,11 @@ func (fake *FakeCsi) RegisterIdentityServerArgsForCall(i int) (*grpc.Server, csi
 	return fake.registerIdentityServerArgsForCall[i].s, fake.registerIdentityServerArgsForCall[i].srv
 }
 
-func (fake *FakeCsi) NewControllerClient(cc *grpc.ClientConn) csi.ControllerClient {
+func (fake *FakeCsi) NewControllerClient(cc grpcshim.ClientConn) csi.ControllerClient {
 	fake.newControllerClientMutex.Lock()
 	ret, specificReturn := fake.newControllerClientReturnsOnCall[len(fake.newControllerClientArgsForCall)]
 	fake.newControllerClientArgsForCall = append(fake.newControllerClientArgsForCall, struct {
-		cc *grpc.ClientConn
+		cc grpcshim.ClientConn
 	}{cc})
 	fake.recordInvocation("NewControllerClient", []interface{}{cc})
 	fake.newControllerClientMutex.Unlock()
@@ -162,7 +162,7 @@ func (fake *FakeCsi) NewControllerClientCallCount() int {
 	return len(fake.newControllerClientArgsForCall)
 }
 
-func (fake *FakeCsi) NewControllerClientArgsForCall(i int) *grpc.ClientConn {
+func (fake *FakeCsi) NewControllerClientArgsForCall(i int) grpcshim.ClientConn {
 	fake.newControllerClientMutex.RLock()
 	defer fake.newControllerClientMutex.RUnlock()
 	return fake.newControllerClientArgsForCall[i].cc

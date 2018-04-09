@@ -12,7 +12,7 @@ import (
 type Csi interface {
 	NewIdentityClient(cc grpcshim.ClientConn) csi.IdentityClient
 	RegisterIdentityServer(s *grpc.Server, srv csi.IdentityServer)
-	NewControllerClient(cc *grpc.ClientConn) csi.ControllerClient
+	NewControllerClient(cc grpcshim.ClientConn) csi.ControllerClient
 	RegisterControllerServer(s *grpc.Server, srv csi.ControllerServer)
 	NewNodeClient(cc grpcshim.ClientConn) csi.NodeClient
 	RegisterNodeServer(s *grpc.Server, srv csi.NodeServer)

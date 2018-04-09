@@ -18,8 +18,8 @@ func (sh *CsiShim) RegisterIdentityServer(s *grpc.Server, srv csi.IdentityServer
 	csi.RegisterIdentityServer(s, srv)
 }
 
-func (sh *CsiShim) NewControllerClient(cc *grpc.ClientConn) csi.ControllerClient {
-	return csi.NewControllerClient(cc)
+func (sh *CsiShim) NewControllerClient(conn grpcshim.ClientConn) csi.ControllerClient {
+	return csi.NewControllerClient(conn.(*grpcshim.ClientConnShim).ClientConn)
 }
 
 func (sh *CsiShim) RegisterControllerServer(s *grpc.Server, srv csi.ControllerServer) {
