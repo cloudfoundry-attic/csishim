@@ -100,6 +100,21 @@ type FakeNodeClient struct {
 		result1 *csi.NodeGetCapabilitiesResponse
 		result2 error
 	}
+	NodeGetInfoStub        func(ctx context.Context, in *csi.NodeGetInfoRequest, opts ...grpc.CallOption) (*csi.NodeGetInfoResponse, error)
+	nodeGetInfoMutex       sync.RWMutex
+	nodeGetInfoArgsForCall []struct {
+		ctx  context.Context
+		in   *csi.NodeGetInfoRequest
+		opts []grpc.CallOption
+	}
+	nodeGetInfoReturns struct {
+		result1 *csi.NodeGetInfoResponse
+		result2 error
+	}
+	nodeGetInfoReturnsOnCall map[int]struct {
+		result1 *csi.NodeGetInfoResponse
+		result2 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
@@ -422,6 +437,59 @@ func (fake *FakeNodeClient) NodeGetCapabilitiesReturnsOnCall(i int, result1 *csi
 	}{result1, result2}
 }
 
+func (fake *FakeNodeClient) NodeGetInfo(ctx context.Context, in *csi.NodeGetInfoRequest, opts ...grpc.CallOption) (*csi.NodeGetInfoResponse, error) {
+	fake.nodeGetInfoMutex.Lock()
+	ret, specificReturn := fake.nodeGetInfoReturnsOnCall[len(fake.nodeGetInfoArgsForCall)]
+	fake.nodeGetInfoArgsForCall = append(fake.nodeGetInfoArgsForCall, struct {
+		ctx  context.Context
+		in   *csi.NodeGetInfoRequest
+		opts []grpc.CallOption
+	}{ctx, in, opts})
+	fake.recordInvocation("NodeGetInfo", []interface{}{ctx, in, opts})
+	fake.nodeGetInfoMutex.Unlock()
+	if fake.NodeGetInfoStub != nil {
+		return fake.NodeGetInfoStub(ctx, in, opts...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fake.nodeGetInfoReturns.result1, fake.nodeGetInfoReturns.result2
+}
+
+func (fake *FakeNodeClient) NodeGetInfoCallCount() int {
+	fake.nodeGetInfoMutex.RLock()
+	defer fake.nodeGetInfoMutex.RUnlock()
+	return len(fake.nodeGetInfoArgsForCall)
+}
+
+func (fake *FakeNodeClient) NodeGetInfoArgsForCall(i int) (context.Context, *csi.NodeGetInfoRequest, []grpc.CallOption) {
+	fake.nodeGetInfoMutex.RLock()
+	defer fake.nodeGetInfoMutex.RUnlock()
+	return fake.nodeGetInfoArgsForCall[i].ctx, fake.nodeGetInfoArgsForCall[i].in, fake.nodeGetInfoArgsForCall[i].opts
+}
+
+func (fake *FakeNodeClient) NodeGetInfoReturns(result1 *csi.NodeGetInfoResponse, result2 error) {
+	fake.NodeGetInfoStub = nil
+	fake.nodeGetInfoReturns = struct {
+		result1 *csi.NodeGetInfoResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeNodeClient) NodeGetInfoReturnsOnCall(i int, result1 *csi.NodeGetInfoResponse, result2 error) {
+	fake.NodeGetInfoStub = nil
+	if fake.nodeGetInfoReturnsOnCall == nil {
+		fake.nodeGetInfoReturnsOnCall = make(map[int]struct {
+			result1 *csi.NodeGetInfoResponse
+			result2 error
+		})
+	}
+	fake.nodeGetInfoReturnsOnCall[i] = struct {
+		result1 *csi.NodeGetInfoResponse
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeNodeClient) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
@@ -437,6 +505,8 @@ func (fake *FakeNodeClient) Invocations() map[string][][]interface{} {
 	defer fake.nodeGetIdMutex.RUnlock()
 	fake.nodeGetCapabilitiesMutex.RLock()
 	defer fake.nodeGetCapabilitiesMutex.RUnlock()
+	fake.nodeGetInfoMutex.RLock()
+	defer fake.nodeGetInfoMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

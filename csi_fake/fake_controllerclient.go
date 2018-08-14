@@ -130,6 +130,51 @@ type FakeControllerClient struct {
 		result1 *csi.ControllerGetCapabilitiesResponse
 		result2 error
 	}
+	CreateSnapshotStub        func(ctx context.Context, in *csi.CreateSnapshotRequest, opts ...grpc.CallOption) (*csi.CreateSnapshotResponse, error)
+	createSnapshotMutex       sync.RWMutex
+	createSnapshotArgsForCall []struct {
+		ctx  context.Context
+		in   *csi.CreateSnapshotRequest
+		opts []grpc.CallOption
+	}
+	createSnapshotReturns struct {
+		result1 *csi.CreateSnapshotResponse
+		result2 error
+	}
+	createSnapshotReturnsOnCall map[int]struct {
+		result1 *csi.CreateSnapshotResponse
+		result2 error
+	}
+	DeleteSnapshotStub        func(ctx context.Context, in *csi.DeleteSnapshotRequest, opts ...grpc.CallOption) (*csi.DeleteSnapshotResponse, error)
+	deleteSnapshotMutex       sync.RWMutex
+	deleteSnapshotArgsForCall []struct {
+		ctx  context.Context
+		in   *csi.DeleteSnapshotRequest
+		opts []grpc.CallOption
+	}
+	deleteSnapshotReturns struct {
+		result1 *csi.DeleteSnapshotResponse
+		result2 error
+	}
+	deleteSnapshotReturnsOnCall map[int]struct {
+		result1 *csi.DeleteSnapshotResponse
+		result2 error
+	}
+	ListSnapshotsStub        func(ctx context.Context, in *csi.ListSnapshotsRequest, opts ...grpc.CallOption) (*csi.ListSnapshotsResponse, error)
+	listSnapshotsMutex       sync.RWMutex
+	listSnapshotsArgsForCall []struct {
+		ctx  context.Context
+		in   *csi.ListSnapshotsRequest
+		opts []grpc.CallOption
+	}
+	listSnapshotsReturns struct {
+		result1 *csi.ListSnapshotsResponse
+		result2 error
+	}
+	listSnapshotsReturnsOnCall map[int]struct {
+		result1 *csi.ListSnapshotsResponse
+		result2 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
@@ -558,6 +603,165 @@ func (fake *FakeControllerClient) ControllerGetCapabilitiesReturnsOnCall(i int, 
 	}{result1, result2}
 }
 
+func (fake *FakeControllerClient) CreateSnapshot(ctx context.Context, in *csi.CreateSnapshotRequest, opts ...grpc.CallOption) (*csi.CreateSnapshotResponse, error) {
+	fake.createSnapshotMutex.Lock()
+	ret, specificReturn := fake.createSnapshotReturnsOnCall[len(fake.createSnapshotArgsForCall)]
+	fake.createSnapshotArgsForCall = append(fake.createSnapshotArgsForCall, struct {
+		ctx  context.Context
+		in   *csi.CreateSnapshotRequest
+		opts []grpc.CallOption
+	}{ctx, in, opts})
+	fake.recordInvocation("CreateSnapshot", []interface{}{ctx, in, opts})
+	fake.createSnapshotMutex.Unlock()
+	if fake.CreateSnapshotStub != nil {
+		return fake.CreateSnapshotStub(ctx, in, opts...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fake.createSnapshotReturns.result1, fake.createSnapshotReturns.result2
+}
+
+func (fake *FakeControllerClient) CreateSnapshotCallCount() int {
+	fake.createSnapshotMutex.RLock()
+	defer fake.createSnapshotMutex.RUnlock()
+	return len(fake.createSnapshotArgsForCall)
+}
+
+func (fake *FakeControllerClient) CreateSnapshotArgsForCall(i int) (context.Context, *csi.CreateSnapshotRequest, []grpc.CallOption) {
+	fake.createSnapshotMutex.RLock()
+	defer fake.createSnapshotMutex.RUnlock()
+	return fake.createSnapshotArgsForCall[i].ctx, fake.createSnapshotArgsForCall[i].in, fake.createSnapshotArgsForCall[i].opts
+}
+
+func (fake *FakeControllerClient) CreateSnapshotReturns(result1 *csi.CreateSnapshotResponse, result2 error) {
+	fake.CreateSnapshotStub = nil
+	fake.createSnapshotReturns = struct {
+		result1 *csi.CreateSnapshotResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeControllerClient) CreateSnapshotReturnsOnCall(i int, result1 *csi.CreateSnapshotResponse, result2 error) {
+	fake.CreateSnapshotStub = nil
+	if fake.createSnapshotReturnsOnCall == nil {
+		fake.createSnapshotReturnsOnCall = make(map[int]struct {
+			result1 *csi.CreateSnapshotResponse
+			result2 error
+		})
+	}
+	fake.createSnapshotReturnsOnCall[i] = struct {
+		result1 *csi.CreateSnapshotResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeControllerClient) DeleteSnapshot(ctx context.Context, in *csi.DeleteSnapshotRequest, opts ...grpc.CallOption) (*csi.DeleteSnapshotResponse, error) {
+	fake.deleteSnapshotMutex.Lock()
+	ret, specificReturn := fake.deleteSnapshotReturnsOnCall[len(fake.deleteSnapshotArgsForCall)]
+	fake.deleteSnapshotArgsForCall = append(fake.deleteSnapshotArgsForCall, struct {
+		ctx  context.Context
+		in   *csi.DeleteSnapshotRequest
+		opts []grpc.CallOption
+	}{ctx, in, opts})
+	fake.recordInvocation("DeleteSnapshot", []interface{}{ctx, in, opts})
+	fake.deleteSnapshotMutex.Unlock()
+	if fake.DeleteSnapshotStub != nil {
+		return fake.DeleteSnapshotStub(ctx, in, opts...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fake.deleteSnapshotReturns.result1, fake.deleteSnapshotReturns.result2
+}
+
+func (fake *FakeControllerClient) DeleteSnapshotCallCount() int {
+	fake.deleteSnapshotMutex.RLock()
+	defer fake.deleteSnapshotMutex.RUnlock()
+	return len(fake.deleteSnapshotArgsForCall)
+}
+
+func (fake *FakeControllerClient) DeleteSnapshotArgsForCall(i int) (context.Context, *csi.DeleteSnapshotRequest, []grpc.CallOption) {
+	fake.deleteSnapshotMutex.RLock()
+	defer fake.deleteSnapshotMutex.RUnlock()
+	return fake.deleteSnapshotArgsForCall[i].ctx, fake.deleteSnapshotArgsForCall[i].in, fake.deleteSnapshotArgsForCall[i].opts
+}
+
+func (fake *FakeControllerClient) DeleteSnapshotReturns(result1 *csi.DeleteSnapshotResponse, result2 error) {
+	fake.DeleteSnapshotStub = nil
+	fake.deleteSnapshotReturns = struct {
+		result1 *csi.DeleteSnapshotResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeControllerClient) DeleteSnapshotReturnsOnCall(i int, result1 *csi.DeleteSnapshotResponse, result2 error) {
+	fake.DeleteSnapshotStub = nil
+	if fake.deleteSnapshotReturnsOnCall == nil {
+		fake.deleteSnapshotReturnsOnCall = make(map[int]struct {
+			result1 *csi.DeleteSnapshotResponse
+			result2 error
+		})
+	}
+	fake.deleteSnapshotReturnsOnCall[i] = struct {
+		result1 *csi.DeleteSnapshotResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeControllerClient) ListSnapshots(ctx context.Context, in *csi.ListSnapshotsRequest, opts ...grpc.CallOption) (*csi.ListSnapshotsResponse, error) {
+	fake.listSnapshotsMutex.Lock()
+	ret, specificReturn := fake.listSnapshotsReturnsOnCall[len(fake.listSnapshotsArgsForCall)]
+	fake.listSnapshotsArgsForCall = append(fake.listSnapshotsArgsForCall, struct {
+		ctx  context.Context
+		in   *csi.ListSnapshotsRequest
+		opts []grpc.CallOption
+	}{ctx, in, opts})
+	fake.recordInvocation("ListSnapshots", []interface{}{ctx, in, opts})
+	fake.listSnapshotsMutex.Unlock()
+	if fake.ListSnapshotsStub != nil {
+		return fake.ListSnapshotsStub(ctx, in, opts...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fake.listSnapshotsReturns.result1, fake.listSnapshotsReturns.result2
+}
+
+func (fake *FakeControllerClient) ListSnapshotsCallCount() int {
+	fake.listSnapshotsMutex.RLock()
+	defer fake.listSnapshotsMutex.RUnlock()
+	return len(fake.listSnapshotsArgsForCall)
+}
+
+func (fake *FakeControllerClient) ListSnapshotsArgsForCall(i int) (context.Context, *csi.ListSnapshotsRequest, []grpc.CallOption) {
+	fake.listSnapshotsMutex.RLock()
+	defer fake.listSnapshotsMutex.RUnlock()
+	return fake.listSnapshotsArgsForCall[i].ctx, fake.listSnapshotsArgsForCall[i].in, fake.listSnapshotsArgsForCall[i].opts
+}
+
+func (fake *FakeControllerClient) ListSnapshotsReturns(result1 *csi.ListSnapshotsResponse, result2 error) {
+	fake.ListSnapshotsStub = nil
+	fake.listSnapshotsReturns = struct {
+		result1 *csi.ListSnapshotsResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeControllerClient) ListSnapshotsReturnsOnCall(i int, result1 *csi.ListSnapshotsResponse, result2 error) {
+	fake.ListSnapshotsStub = nil
+	if fake.listSnapshotsReturnsOnCall == nil {
+		fake.listSnapshotsReturnsOnCall = make(map[int]struct {
+			result1 *csi.ListSnapshotsResponse
+			result2 error
+		})
+	}
+	fake.listSnapshotsReturnsOnCall[i] = struct {
+		result1 *csi.ListSnapshotsResponse
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeControllerClient) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
@@ -577,6 +781,12 @@ func (fake *FakeControllerClient) Invocations() map[string][][]interface{} {
 	defer fake.getCapacityMutex.RUnlock()
 	fake.controllerGetCapabilitiesMutex.RLock()
 	defer fake.controllerGetCapabilitiesMutex.RUnlock()
+	fake.createSnapshotMutex.RLock()
+	defer fake.createSnapshotMutex.RUnlock()
+	fake.deleteSnapshotMutex.RLock()
+	defer fake.deleteSnapshotMutex.RUnlock()
+	fake.listSnapshotsMutex.RLock()
+	defer fake.listSnapshotsMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value
