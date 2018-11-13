@@ -2,125 +2,20 @@
 package csi_fake
 
 import (
-	"sync"
+	context "context"
+	sync "sync"
 
-	csi "github.com/container-storage-interface/spec/lib/go/csi/v0"
-	"golang.org/x/net/context"
-	"google.golang.org/grpc"
+	csi "github.com/container-storage-interface/spec/lib/go/csi"
+	grpc "google.golang.org/grpc"
 )
 
 type FakeControllerClient struct {
-	CreateVolumeStub        func(ctx context.Context, in *csi.CreateVolumeRequest, opts ...grpc.CallOption) (*csi.CreateVolumeResponse, error)
-	createVolumeMutex       sync.RWMutex
-	createVolumeArgsForCall []struct {
-		ctx  context.Context
-		in   *csi.CreateVolumeRequest
-		opts []grpc.CallOption
-	}
-	createVolumeReturns struct {
-		result1 *csi.CreateVolumeResponse
-		result2 error
-	}
-	createVolumeReturnsOnCall map[int]struct {
-		result1 *csi.CreateVolumeResponse
-		result2 error
-	}
-	DeleteVolumeStub        func(ctx context.Context, in *csi.DeleteVolumeRequest, opts ...grpc.CallOption) (*csi.DeleteVolumeResponse, error)
-	deleteVolumeMutex       sync.RWMutex
-	deleteVolumeArgsForCall []struct {
-		ctx  context.Context
-		in   *csi.DeleteVolumeRequest
-		opts []grpc.CallOption
-	}
-	deleteVolumeReturns struct {
-		result1 *csi.DeleteVolumeResponse
-		result2 error
-	}
-	deleteVolumeReturnsOnCall map[int]struct {
-		result1 *csi.DeleteVolumeResponse
-		result2 error
-	}
-	ControllerPublishVolumeStub        func(ctx context.Context, in *csi.ControllerPublishVolumeRequest, opts ...grpc.CallOption) (*csi.ControllerPublishVolumeResponse, error)
-	controllerPublishVolumeMutex       sync.RWMutex
-	controllerPublishVolumeArgsForCall []struct {
-		ctx  context.Context
-		in   *csi.ControllerPublishVolumeRequest
-		opts []grpc.CallOption
-	}
-	controllerPublishVolumeReturns struct {
-		result1 *csi.ControllerPublishVolumeResponse
-		result2 error
-	}
-	controllerPublishVolumeReturnsOnCall map[int]struct {
-		result1 *csi.ControllerPublishVolumeResponse
-		result2 error
-	}
-	ControllerUnpublishVolumeStub        func(ctx context.Context, in *csi.ControllerUnpublishVolumeRequest, opts ...grpc.CallOption) (*csi.ControllerUnpublishVolumeResponse, error)
-	controllerUnpublishVolumeMutex       sync.RWMutex
-	controllerUnpublishVolumeArgsForCall []struct {
-		ctx  context.Context
-		in   *csi.ControllerUnpublishVolumeRequest
-		opts []grpc.CallOption
-	}
-	controllerUnpublishVolumeReturns struct {
-		result1 *csi.ControllerUnpublishVolumeResponse
-		result2 error
-	}
-	controllerUnpublishVolumeReturnsOnCall map[int]struct {
-		result1 *csi.ControllerUnpublishVolumeResponse
-		result2 error
-	}
-	ValidateVolumeCapabilitiesStub        func(ctx context.Context, in *csi.ValidateVolumeCapabilitiesRequest, opts ...grpc.CallOption) (*csi.ValidateVolumeCapabilitiesResponse, error)
-	validateVolumeCapabilitiesMutex       sync.RWMutex
-	validateVolumeCapabilitiesArgsForCall []struct {
-		ctx  context.Context
-		in   *csi.ValidateVolumeCapabilitiesRequest
-		opts []grpc.CallOption
-	}
-	validateVolumeCapabilitiesReturns struct {
-		result1 *csi.ValidateVolumeCapabilitiesResponse
-		result2 error
-	}
-	validateVolumeCapabilitiesReturnsOnCall map[int]struct {
-		result1 *csi.ValidateVolumeCapabilitiesResponse
-		result2 error
-	}
-	ListVolumesStub        func(ctx context.Context, in *csi.ListVolumesRequest, opts ...grpc.CallOption) (*csi.ListVolumesResponse, error)
-	listVolumesMutex       sync.RWMutex
-	listVolumesArgsForCall []struct {
-		ctx  context.Context
-		in   *csi.ListVolumesRequest
-		opts []grpc.CallOption
-	}
-	listVolumesReturns struct {
-		result1 *csi.ListVolumesResponse
-		result2 error
-	}
-	listVolumesReturnsOnCall map[int]struct {
-		result1 *csi.ListVolumesResponse
-		result2 error
-	}
-	GetCapacityStub        func(ctx context.Context, in *csi.GetCapacityRequest, opts ...grpc.CallOption) (*csi.GetCapacityResponse, error)
-	getCapacityMutex       sync.RWMutex
-	getCapacityArgsForCall []struct {
-		ctx  context.Context
-		in   *csi.GetCapacityRequest
-		opts []grpc.CallOption
-	}
-	getCapacityReturns struct {
-		result1 *csi.GetCapacityResponse
-		result2 error
-	}
-	getCapacityReturnsOnCall map[int]struct {
-		result1 *csi.GetCapacityResponse
-		result2 error
-	}
-	ControllerGetCapabilitiesStub        func(ctx context.Context, in *csi.ControllerGetCapabilitiesRequest, opts ...grpc.CallOption) (*csi.ControllerGetCapabilitiesResponse, error)
+	ControllerGetCapabilitiesStub        func(context.Context, *csi.ControllerGetCapabilitiesRequest, ...grpc.CallOption) (*csi.ControllerGetCapabilitiesResponse, error)
 	controllerGetCapabilitiesMutex       sync.RWMutex
 	controllerGetCapabilitiesArgsForCall []struct {
-		ctx  context.Context
-		in   *csi.ControllerGetCapabilitiesRequest
-		opts []grpc.CallOption
+		arg1 context.Context
+		arg2 *csi.ControllerGetCapabilitiesRequest
+		arg3 []grpc.CallOption
 	}
 	controllerGetCapabilitiesReturns struct {
 		result1 *csi.ControllerGetCapabilitiesResponse
@@ -130,12 +25,42 @@ type FakeControllerClient struct {
 		result1 *csi.ControllerGetCapabilitiesResponse
 		result2 error
 	}
-	CreateSnapshotStub        func(ctx context.Context, in *csi.CreateSnapshotRequest, opts ...grpc.CallOption) (*csi.CreateSnapshotResponse, error)
+	ControllerPublishVolumeStub        func(context.Context, *csi.ControllerPublishVolumeRequest, ...grpc.CallOption) (*csi.ControllerPublishVolumeResponse, error)
+	controllerPublishVolumeMutex       sync.RWMutex
+	controllerPublishVolumeArgsForCall []struct {
+		arg1 context.Context
+		arg2 *csi.ControllerPublishVolumeRequest
+		arg3 []grpc.CallOption
+	}
+	controllerPublishVolumeReturns struct {
+		result1 *csi.ControllerPublishVolumeResponse
+		result2 error
+	}
+	controllerPublishVolumeReturnsOnCall map[int]struct {
+		result1 *csi.ControllerPublishVolumeResponse
+		result2 error
+	}
+	ControllerUnpublishVolumeStub        func(context.Context, *csi.ControllerUnpublishVolumeRequest, ...grpc.CallOption) (*csi.ControllerUnpublishVolumeResponse, error)
+	controllerUnpublishVolumeMutex       sync.RWMutex
+	controllerUnpublishVolumeArgsForCall []struct {
+		arg1 context.Context
+		arg2 *csi.ControllerUnpublishVolumeRequest
+		arg3 []grpc.CallOption
+	}
+	controllerUnpublishVolumeReturns struct {
+		result1 *csi.ControllerUnpublishVolumeResponse
+		result2 error
+	}
+	controllerUnpublishVolumeReturnsOnCall map[int]struct {
+		result1 *csi.ControllerUnpublishVolumeResponse
+		result2 error
+	}
+	CreateSnapshotStub        func(context.Context, *csi.CreateSnapshotRequest, ...grpc.CallOption) (*csi.CreateSnapshotResponse, error)
 	createSnapshotMutex       sync.RWMutex
 	createSnapshotArgsForCall []struct {
-		ctx  context.Context
-		in   *csi.CreateSnapshotRequest
-		opts []grpc.CallOption
+		arg1 context.Context
+		arg2 *csi.CreateSnapshotRequest
+		arg3 []grpc.CallOption
 	}
 	createSnapshotReturns struct {
 		result1 *csi.CreateSnapshotResponse
@@ -145,12 +70,27 @@ type FakeControllerClient struct {
 		result1 *csi.CreateSnapshotResponse
 		result2 error
 	}
-	DeleteSnapshotStub        func(ctx context.Context, in *csi.DeleteSnapshotRequest, opts ...grpc.CallOption) (*csi.DeleteSnapshotResponse, error)
+	CreateVolumeStub        func(context.Context, *csi.CreateVolumeRequest, ...grpc.CallOption) (*csi.CreateVolumeResponse, error)
+	createVolumeMutex       sync.RWMutex
+	createVolumeArgsForCall []struct {
+		arg1 context.Context
+		arg2 *csi.CreateVolumeRequest
+		arg3 []grpc.CallOption
+	}
+	createVolumeReturns struct {
+		result1 *csi.CreateVolumeResponse
+		result2 error
+	}
+	createVolumeReturnsOnCall map[int]struct {
+		result1 *csi.CreateVolumeResponse
+		result2 error
+	}
+	DeleteSnapshotStub        func(context.Context, *csi.DeleteSnapshotRequest, ...grpc.CallOption) (*csi.DeleteSnapshotResponse, error)
 	deleteSnapshotMutex       sync.RWMutex
 	deleteSnapshotArgsForCall []struct {
-		ctx  context.Context
-		in   *csi.DeleteSnapshotRequest
-		opts []grpc.CallOption
+		arg1 context.Context
+		arg2 *csi.DeleteSnapshotRequest
+		arg3 []grpc.CallOption
 	}
 	deleteSnapshotReturns struct {
 		result1 *csi.DeleteSnapshotResponse
@@ -160,12 +100,42 @@ type FakeControllerClient struct {
 		result1 *csi.DeleteSnapshotResponse
 		result2 error
 	}
-	ListSnapshotsStub        func(ctx context.Context, in *csi.ListSnapshotsRequest, opts ...grpc.CallOption) (*csi.ListSnapshotsResponse, error)
+	DeleteVolumeStub        func(context.Context, *csi.DeleteVolumeRequest, ...grpc.CallOption) (*csi.DeleteVolumeResponse, error)
+	deleteVolumeMutex       sync.RWMutex
+	deleteVolumeArgsForCall []struct {
+		arg1 context.Context
+		arg2 *csi.DeleteVolumeRequest
+		arg3 []grpc.CallOption
+	}
+	deleteVolumeReturns struct {
+		result1 *csi.DeleteVolumeResponse
+		result2 error
+	}
+	deleteVolumeReturnsOnCall map[int]struct {
+		result1 *csi.DeleteVolumeResponse
+		result2 error
+	}
+	GetCapacityStub        func(context.Context, *csi.GetCapacityRequest, ...grpc.CallOption) (*csi.GetCapacityResponse, error)
+	getCapacityMutex       sync.RWMutex
+	getCapacityArgsForCall []struct {
+		arg1 context.Context
+		arg2 *csi.GetCapacityRequest
+		arg3 []grpc.CallOption
+	}
+	getCapacityReturns struct {
+		result1 *csi.GetCapacityResponse
+		result2 error
+	}
+	getCapacityReturnsOnCall map[int]struct {
+		result1 *csi.GetCapacityResponse
+		result2 error
+	}
+	ListSnapshotsStub        func(context.Context, *csi.ListSnapshotsRequest, ...grpc.CallOption) (*csi.ListSnapshotsResponse, error)
 	listSnapshotsMutex       sync.RWMutex
 	listSnapshotsArgsForCall []struct {
-		ctx  context.Context
-		in   *csi.ListSnapshotsRequest
-		opts []grpc.CallOption
+		arg1 context.Context
+		arg2 *csi.ListSnapshotsRequest
+		arg3 []grpc.CallOption
 	}
 	listSnapshotsReturns struct {
 		result1 *csi.ListSnapshotsResponse
@@ -175,398 +145,58 @@ type FakeControllerClient struct {
 		result1 *csi.ListSnapshotsResponse
 		result2 error
 	}
+	ListVolumesStub        func(context.Context, *csi.ListVolumesRequest, ...grpc.CallOption) (*csi.ListVolumesResponse, error)
+	listVolumesMutex       sync.RWMutex
+	listVolumesArgsForCall []struct {
+		arg1 context.Context
+		arg2 *csi.ListVolumesRequest
+		arg3 []grpc.CallOption
+	}
+	listVolumesReturns struct {
+		result1 *csi.ListVolumesResponse
+		result2 error
+	}
+	listVolumesReturnsOnCall map[int]struct {
+		result1 *csi.ListVolumesResponse
+		result2 error
+	}
+	ValidateVolumeCapabilitiesStub        func(context.Context, *csi.ValidateVolumeCapabilitiesRequest, ...grpc.CallOption) (*csi.ValidateVolumeCapabilitiesResponse, error)
+	validateVolumeCapabilitiesMutex       sync.RWMutex
+	validateVolumeCapabilitiesArgsForCall []struct {
+		arg1 context.Context
+		arg2 *csi.ValidateVolumeCapabilitiesRequest
+		arg3 []grpc.CallOption
+	}
+	validateVolumeCapabilitiesReturns struct {
+		result1 *csi.ValidateVolumeCapabilitiesResponse
+		result2 error
+	}
+	validateVolumeCapabilitiesReturnsOnCall map[int]struct {
+		result1 *csi.ValidateVolumeCapabilitiesResponse
+		result2 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *FakeControllerClient) CreateVolume(ctx context.Context, in *csi.CreateVolumeRequest, opts ...grpc.CallOption) (*csi.CreateVolumeResponse, error) {
-	fake.createVolumeMutex.Lock()
-	ret, specificReturn := fake.createVolumeReturnsOnCall[len(fake.createVolumeArgsForCall)]
-	fake.createVolumeArgsForCall = append(fake.createVolumeArgsForCall, struct {
-		ctx  context.Context
-		in   *csi.CreateVolumeRequest
-		opts []grpc.CallOption
-	}{ctx, in, opts})
-	fake.recordInvocation("CreateVolume", []interface{}{ctx, in, opts})
-	fake.createVolumeMutex.Unlock()
-	if fake.CreateVolumeStub != nil {
-		return fake.CreateVolumeStub(ctx, in, opts...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.createVolumeReturns.result1, fake.createVolumeReturns.result2
-}
-
-func (fake *FakeControllerClient) CreateVolumeCallCount() int {
-	fake.createVolumeMutex.RLock()
-	defer fake.createVolumeMutex.RUnlock()
-	return len(fake.createVolumeArgsForCall)
-}
-
-func (fake *FakeControllerClient) CreateVolumeArgsForCall(i int) (context.Context, *csi.CreateVolumeRequest, []grpc.CallOption) {
-	fake.createVolumeMutex.RLock()
-	defer fake.createVolumeMutex.RUnlock()
-	return fake.createVolumeArgsForCall[i].ctx, fake.createVolumeArgsForCall[i].in, fake.createVolumeArgsForCall[i].opts
-}
-
-func (fake *FakeControllerClient) CreateVolumeReturns(result1 *csi.CreateVolumeResponse, result2 error) {
-	fake.CreateVolumeStub = nil
-	fake.createVolumeReturns = struct {
-		result1 *csi.CreateVolumeResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeControllerClient) CreateVolumeReturnsOnCall(i int, result1 *csi.CreateVolumeResponse, result2 error) {
-	fake.CreateVolumeStub = nil
-	if fake.createVolumeReturnsOnCall == nil {
-		fake.createVolumeReturnsOnCall = make(map[int]struct {
-			result1 *csi.CreateVolumeResponse
-			result2 error
-		})
-	}
-	fake.createVolumeReturnsOnCall[i] = struct {
-		result1 *csi.CreateVolumeResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeControllerClient) DeleteVolume(ctx context.Context, in *csi.DeleteVolumeRequest, opts ...grpc.CallOption) (*csi.DeleteVolumeResponse, error) {
-	fake.deleteVolumeMutex.Lock()
-	ret, specificReturn := fake.deleteVolumeReturnsOnCall[len(fake.deleteVolumeArgsForCall)]
-	fake.deleteVolumeArgsForCall = append(fake.deleteVolumeArgsForCall, struct {
-		ctx  context.Context
-		in   *csi.DeleteVolumeRequest
-		opts []grpc.CallOption
-	}{ctx, in, opts})
-	fake.recordInvocation("DeleteVolume", []interface{}{ctx, in, opts})
-	fake.deleteVolumeMutex.Unlock()
-	if fake.DeleteVolumeStub != nil {
-		return fake.DeleteVolumeStub(ctx, in, opts...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.deleteVolumeReturns.result1, fake.deleteVolumeReturns.result2
-}
-
-func (fake *FakeControllerClient) DeleteVolumeCallCount() int {
-	fake.deleteVolumeMutex.RLock()
-	defer fake.deleteVolumeMutex.RUnlock()
-	return len(fake.deleteVolumeArgsForCall)
-}
-
-func (fake *FakeControllerClient) DeleteVolumeArgsForCall(i int) (context.Context, *csi.DeleteVolumeRequest, []grpc.CallOption) {
-	fake.deleteVolumeMutex.RLock()
-	defer fake.deleteVolumeMutex.RUnlock()
-	return fake.deleteVolumeArgsForCall[i].ctx, fake.deleteVolumeArgsForCall[i].in, fake.deleteVolumeArgsForCall[i].opts
-}
-
-func (fake *FakeControllerClient) DeleteVolumeReturns(result1 *csi.DeleteVolumeResponse, result2 error) {
-	fake.DeleteVolumeStub = nil
-	fake.deleteVolumeReturns = struct {
-		result1 *csi.DeleteVolumeResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeControllerClient) DeleteVolumeReturnsOnCall(i int, result1 *csi.DeleteVolumeResponse, result2 error) {
-	fake.DeleteVolumeStub = nil
-	if fake.deleteVolumeReturnsOnCall == nil {
-		fake.deleteVolumeReturnsOnCall = make(map[int]struct {
-			result1 *csi.DeleteVolumeResponse
-			result2 error
-		})
-	}
-	fake.deleteVolumeReturnsOnCall[i] = struct {
-		result1 *csi.DeleteVolumeResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeControllerClient) ControllerPublishVolume(ctx context.Context, in *csi.ControllerPublishVolumeRequest, opts ...grpc.CallOption) (*csi.ControllerPublishVolumeResponse, error) {
-	fake.controllerPublishVolumeMutex.Lock()
-	ret, specificReturn := fake.controllerPublishVolumeReturnsOnCall[len(fake.controllerPublishVolumeArgsForCall)]
-	fake.controllerPublishVolumeArgsForCall = append(fake.controllerPublishVolumeArgsForCall, struct {
-		ctx  context.Context
-		in   *csi.ControllerPublishVolumeRequest
-		opts []grpc.CallOption
-	}{ctx, in, opts})
-	fake.recordInvocation("ControllerPublishVolume", []interface{}{ctx, in, opts})
-	fake.controllerPublishVolumeMutex.Unlock()
-	if fake.ControllerPublishVolumeStub != nil {
-		return fake.ControllerPublishVolumeStub(ctx, in, opts...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.controllerPublishVolumeReturns.result1, fake.controllerPublishVolumeReturns.result2
-}
-
-func (fake *FakeControllerClient) ControllerPublishVolumeCallCount() int {
-	fake.controllerPublishVolumeMutex.RLock()
-	defer fake.controllerPublishVolumeMutex.RUnlock()
-	return len(fake.controllerPublishVolumeArgsForCall)
-}
-
-func (fake *FakeControllerClient) ControllerPublishVolumeArgsForCall(i int) (context.Context, *csi.ControllerPublishVolumeRequest, []grpc.CallOption) {
-	fake.controllerPublishVolumeMutex.RLock()
-	defer fake.controllerPublishVolumeMutex.RUnlock()
-	return fake.controllerPublishVolumeArgsForCall[i].ctx, fake.controllerPublishVolumeArgsForCall[i].in, fake.controllerPublishVolumeArgsForCall[i].opts
-}
-
-func (fake *FakeControllerClient) ControllerPublishVolumeReturns(result1 *csi.ControllerPublishVolumeResponse, result2 error) {
-	fake.ControllerPublishVolumeStub = nil
-	fake.controllerPublishVolumeReturns = struct {
-		result1 *csi.ControllerPublishVolumeResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeControllerClient) ControllerPublishVolumeReturnsOnCall(i int, result1 *csi.ControllerPublishVolumeResponse, result2 error) {
-	fake.ControllerPublishVolumeStub = nil
-	if fake.controllerPublishVolumeReturnsOnCall == nil {
-		fake.controllerPublishVolumeReturnsOnCall = make(map[int]struct {
-			result1 *csi.ControllerPublishVolumeResponse
-			result2 error
-		})
-	}
-	fake.controllerPublishVolumeReturnsOnCall[i] = struct {
-		result1 *csi.ControllerPublishVolumeResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeControllerClient) ControllerUnpublishVolume(ctx context.Context, in *csi.ControllerUnpublishVolumeRequest, opts ...grpc.CallOption) (*csi.ControllerUnpublishVolumeResponse, error) {
-	fake.controllerUnpublishVolumeMutex.Lock()
-	ret, specificReturn := fake.controllerUnpublishVolumeReturnsOnCall[len(fake.controllerUnpublishVolumeArgsForCall)]
-	fake.controllerUnpublishVolumeArgsForCall = append(fake.controllerUnpublishVolumeArgsForCall, struct {
-		ctx  context.Context
-		in   *csi.ControllerUnpublishVolumeRequest
-		opts []grpc.CallOption
-	}{ctx, in, opts})
-	fake.recordInvocation("ControllerUnpublishVolume", []interface{}{ctx, in, opts})
-	fake.controllerUnpublishVolumeMutex.Unlock()
-	if fake.ControllerUnpublishVolumeStub != nil {
-		return fake.ControllerUnpublishVolumeStub(ctx, in, opts...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.controllerUnpublishVolumeReturns.result1, fake.controllerUnpublishVolumeReturns.result2
-}
-
-func (fake *FakeControllerClient) ControllerUnpublishVolumeCallCount() int {
-	fake.controllerUnpublishVolumeMutex.RLock()
-	defer fake.controllerUnpublishVolumeMutex.RUnlock()
-	return len(fake.controllerUnpublishVolumeArgsForCall)
-}
-
-func (fake *FakeControllerClient) ControllerUnpublishVolumeArgsForCall(i int) (context.Context, *csi.ControllerUnpublishVolumeRequest, []grpc.CallOption) {
-	fake.controllerUnpublishVolumeMutex.RLock()
-	defer fake.controllerUnpublishVolumeMutex.RUnlock()
-	return fake.controllerUnpublishVolumeArgsForCall[i].ctx, fake.controllerUnpublishVolumeArgsForCall[i].in, fake.controllerUnpublishVolumeArgsForCall[i].opts
-}
-
-func (fake *FakeControllerClient) ControllerUnpublishVolumeReturns(result1 *csi.ControllerUnpublishVolumeResponse, result2 error) {
-	fake.ControllerUnpublishVolumeStub = nil
-	fake.controllerUnpublishVolumeReturns = struct {
-		result1 *csi.ControllerUnpublishVolumeResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeControllerClient) ControllerUnpublishVolumeReturnsOnCall(i int, result1 *csi.ControllerUnpublishVolumeResponse, result2 error) {
-	fake.ControllerUnpublishVolumeStub = nil
-	if fake.controllerUnpublishVolumeReturnsOnCall == nil {
-		fake.controllerUnpublishVolumeReturnsOnCall = make(map[int]struct {
-			result1 *csi.ControllerUnpublishVolumeResponse
-			result2 error
-		})
-	}
-	fake.controllerUnpublishVolumeReturnsOnCall[i] = struct {
-		result1 *csi.ControllerUnpublishVolumeResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeControllerClient) ValidateVolumeCapabilities(ctx context.Context, in *csi.ValidateVolumeCapabilitiesRequest, opts ...grpc.CallOption) (*csi.ValidateVolumeCapabilitiesResponse, error) {
-	fake.validateVolumeCapabilitiesMutex.Lock()
-	ret, specificReturn := fake.validateVolumeCapabilitiesReturnsOnCall[len(fake.validateVolumeCapabilitiesArgsForCall)]
-	fake.validateVolumeCapabilitiesArgsForCall = append(fake.validateVolumeCapabilitiesArgsForCall, struct {
-		ctx  context.Context
-		in   *csi.ValidateVolumeCapabilitiesRequest
-		opts []grpc.CallOption
-	}{ctx, in, opts})
-	fake.recordInvocation("ValidateVolumeCapabilities", []interface{}{ctx, in, opts})
-	fake.validateVolumeCapabilitiesMutex.Unlock()
-	if fake.ValidateVolumeCapabilitiesStub != nil {
-		return fake.ValidateVolumeCapabilitiesStub(ctx, in, opts...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.validateVolumeCapabilitiesReturns.result1, fake.validateVolumeCapabilitiesReturns.result2
-}
-
-func (fake *FakeControllerClient) ValidateVolumeCapabilitiesCallCount() int {
-	fake.validateVolumeCapabilitiesMutex.RLock()
-	defer fake.validateVolumeCapabilitiesMutex.RUnlock()
-	return len(fake.validateVolumeCapabilitiesArgsForCall)
-}
-
-func (fake *FakeControllerClient) ValidateVolumeCapabilitiesArgsForCall(i int) (context.Context, *csi.ValidateVolumeCapabilitiesRequest, []grpc.CallOption) {
-	fake.validateVolumeCapabilitiesMutex.RLock()
-	defer fake.validateVolumeCapabilitiesMutex.RUnlock()
-	return fake.validateVolumeCapabilitiesArgsForCall[i].ctx, fake.validateVolumeCapabilitiesArgsForCall[i].in, fake.validateVolumeCapabilitiesArgsForCall[i].opts
-}
-
-func (fake *FakeControllerClient) ValidateVolumeCapabilitiesReturns(result1 *csi.ValidateVolumeCapabilitiesResponse, result2 error) {
-	fake.ValidateVolumeCapabilitiesStub = nil
-	fake.validateVolumeCapabilitiesReturns = struct {
-		result1 *csi.ValidateVolumeCapabilitiesResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeControllerClient) ValidateVolumeCapabilitiesReturnsOnCall(i int, result1 *csi.ValidateVolumeCapabilitiesResponse, result2 error) {
-	fake.ValidateVolumeCapabilitiesStub = nil
-	if fake.validateVolumeCapabilitiesReturnsOnCall == nil {
-		fake.validateVolumeCapabilitiesReturnsOnCall = make(map[int]struct {
-			result1 *csi.ValidateVolumeCapabilitiesResponse
-			result2 error
-		})
-	}
-	fake.validateVolumeCapabilitiesReturnsOnCall[i] = struct {
-		result1 *csi.ValidateVolumeCapabilitiesResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeControllerClient) ListVolumes(ctx context.Context, in *csi.ListVolumesRequest, opts ...grpc.CallOption) (*csi.ListVolumesResponse, error) {
-	fake.listVolumesMutex.Lock()
-	ret, specificReturn := fake.listVolumesReturnsOnCall[len(fake.listVolumesArgsForCall)]
-	fake.listVolumesArgsForCall = append(fake.listVolumesArgsForCall, struct {
-		ctx  context.Context
-		in   *csi.ListVolumesRequest
-		opts []grpc.CallOption
-	}{ctx, in, opts})
-	fake.recordInvocation("ListVolumes", []interface{}{ctx, in, opts})
-	fake.listVolumesMutex.Unlock()
-	if fake.ListVolumesStub != nil {
-		return fake.ListVolumesStub(ctx, in, opts...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.listVolumesReturns.result1, fake.listVolumesReturns.result2
-}
-
-func (fake *FakeControllerClient) ListVolumesCallCount() int {
-	fake.listVolumesMutex.RLock()
-	defer fake.listVolumesMutex.RUnlock()
-	return len(fake.listVolumesArgsForCall)
-}
-
-func (fake *FakeControllerClient) ListVolumesArgsForCall(i int) (context.Context, *csi.ListVolumesRequest, []grpc.CallOption) {
-	fake.listVolumesMutex.RLock()
-	defer fake.listVolumesMutex.RUnlock()
-	return fake.listVolumesArgsForCall[i].ctx, fake.listVolumesArgsForCall[i].in, fake.listVolumesArgsForCall[i].opts
-}
-
-func (fake *FakeControllerClient) ListVolumesReturns(result1 *csi.ListVolumesResponse, result2 error) {
-	fake.ListVolumesStub = nil
-	fake.listVolumesReturns = struct {
-		result1 *csi.ListVolumesResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeControllerClient) ListVolumesReturnsOnCall(i int, result1 *csi.ListVolumesResponse, result2 error) {
-	fake.ListVolumesStub = nil
-	if fake.listVolumesReturnsOnCall == nil {
-		fake.listVolumesReturnsOnCall = make(map[int]struct {
-			result1 *csi.ListVolumesResponse
-			result2 error
-		})
-	}
-	fake.listVolumesReturnsOnCall[i] = struct {
-		result1 *csi.ListVolumesResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeControllerClient) GetCapacity(ctx context.Context, in *csi.GetCapacityRequest, opts ...grpc.CallOption) (*csi.GetCapacityResponse, error) {
-	fake.getCapacityMutex.Lock()
-	ret, specificReturn := fake.getCapacityReturnsOnCall[len(fake.getCapacityArgsForCall)]
-	fake.getCapacityArgsForCall = append(fake.getCapacityArgsForCall, struct {
-		ctx  context.Context
-		in   *csi.GetCapacityRequest
-		opts []grpc.CallOption
-	}{ctx, in, opts})
-	fake.recordInvocation("GetCapacity", []interface{}{ctx, in, opts})
-	fake.getCapacityMutex.Unlock()
-	if fake.GetCapacityStub != nil {
-		return fake.GetCapacityStub(ctx, in, opts...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.getCapacityReturns.result1, fake.getCapacityReturns.result2
-}
-
-func (fake *FakeControllerClient) GetCapacityCallCount() int {
-	fake.getCapacityMutex.RLock()
-	defer fake.getCapacityMutex.RUnlock()
-	return len(fake.getCapacityArgsForCall)
-}
-
-func (fake *FakeControllerClient) GetCapacityArgsForCall(i int) (context.Context, *csi.GetCapacityRequest, []grpc.CallOption) {
-	fake.getCapacityMutex.RLock()
-	defer fake.getCapacityMutex.RUnlock()
-	return fake.getCapacityArgsForCall[i].ctx, fake.getCapacityArgsForCall[i].in, fake.getCapacityArgsForCall[i].opts
-}
-
-func (fake *FakeControllerClient) GetCapacityReturns(result1 *csi.GetCapacityResponse, result2 error) {
-	fake.GetCapacityStub = nil
-	fake.getCapacityReturns = struct {
-		result1 *csi.GetCapacityResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeControllerClient) GetCapacityReturnsOnCall(i int, result1 *csi.GetCapacityResponse, result2 error) {
-	fake.GetCapacityStub = nil
-	if fake.getCapacityReturnsOnCall == nil {
-		fake.getCapacityReturnsOnCall = make(map[int]struct {
-			result1 *csi.GetCapacityResponse
-			result2 error
-		})
-	}
-	fake.getCapacityReturnsOnCall[i] = struct {
-		result1 *csi.GetCapacityResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeControllerClient) ControllerGetCapabilities(ctx context.Context, in *csi.ControllerGetCapabilitiesRequest, opts ...grpc.CallOption) (*csi.ControllerGetCapabilitiesResponse, error) {
+func (fake *FakeControllerClient) ControllerGetCapabilities(arg1 context.Context, arg2 *csi.ControllerGetCapabilitiesRequest, arg3 ...grpc.CallOption) (*csi.ControllerGetCapabilitiesResponse, error) {
 	fake.controllerGetCapabilitiesMutex.Lock()
 	ret, specificReturn := fake.controllerGetCapabilitiesReturnsOnCall[len(fake.controllerGetCapabilitiesArgsForCall)]
 	fake.controllerGetCapabilitiesArgsForCall = append(fake.controllerGetCapabilitiesArgsForCall, struct {
-		ctx  context.Context
-		in   *csi.ControllerGetCapabilitiesRequest
-		opts []grpc.CallOption
-	}{ctx, in, opts})
-	fake.recordInvocation("ControllerGetCapabilities", []interface{}{ctx, in, opts})
+		arg1 context.Context
+		arg2 *csi.ControllerGetCapabilitiesRequest
+		arg3 []grpc.CallOption
+	}{arg1, arg2, arg3})
+	fake.recordInvocation("ControllerGetCapabilities", []interface{}{arg1, arg2, arg3})
 	fake.controllerGetCapabilitiesMutex.Unlock()
 	if fake.ControllerGetCapabilitiesStub != nil {
-		return fake.ControllerGetCapabilitiesStub(ctx, in, opts...)
+		return fake.ControllerGetCapabilitiesStub(arg1, arg2, arg3...)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.controllerGetCapabilitiesReturns.result1, fake.controllerGetCapabilitiesReturns.result2
+	fakeReturns := fake.controllerGetCapabilitiesReturns
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeControllerClient) ControllerGetCapabilitiesCallCount() int {
@@ -575,13 +205,22 @@ func (fake *FakeControllerClient) ControllerGetCapabilitiesCallCount() int {
 	return len(fake.controllerGetCapabilitiesArgsForCall)
 }
 
+func (fake *FakeControllerClient) ControllerGetCapabilitiesCalls(stub func(context.Context, *csi.ControllerGetCapabilitiesRequest, ...grpc.CallOption) (*csi.ControllerGetCapabilitiesResponse, error)) {
+	fake.controllerGetCapabilitiesMutex.Lock()
+	defer fake.controllerGetCapabilitiesMutex.Unlock()
+	fake.ControllerGetCapabilitiesStub = stub
+}
+
 func (fake *FakeControllerClient) ControllerGetCapabilitiesArgsForCall(i int) (context.Context, *csi.ControllerGetCapabilitiesRequest, []grpc.CallOption) {
 	fake.controllerGetCapabilitiesMutex.RLock()
 	defer fake.controllerGetCapabilitiesMutex.RUnlock()
-	return fake.controllerGetCapabilitiesArgsForCall[i].ctx, fake.controllerGetCapabilitiesArgsForCall[i].in, fake.controllerGetCapabilitiesArgsForCall[i].opts
+	argsForCall := fake.controllerGetCapabilitiesArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
 }
 
 func (fake *FakeControllerClient) ControllerGetCapabilitiesReturns(result1 *csi.ControllerGetCapabilitiesResponse, result2 error) {
+	fake.controllerGetCapabilitiesMutex.Lock()
+	defer fake.controllerGetCapabilitiesMutex.Unlock()
 	fake.ControllerGetCapabilitiesStub = nil
 	fake.controllerGetCapabilitiesReturns = struct {
 		result1 *csi.ControllerGetCapabilitiesResponse
@@ -590,6 +229,8 @@ func (fake *FakeControllerClient) ControllerGetCapabilitiesReturns(result1 *csi.
 }
 
 func (fake *FakeControllerClient) ControllerGetCapabilitiesReturnsOnCall(i int, result1 *csi.ControllerGetCapabilitiesResponse, result2 error) {
+	fake.controllerGetCapabilitiesMutex.Lock()
+	defer fake.controllerGetCapabilitiesMutex.Unlock()
 	fake.ControllerGetCapabilitiesStub = nil
 	if fake.controllerGetCapabilitiesReturnsOnCall == nil {
 		fake.controllerGetCapabilitiesReturnsOnCall = make(map[int]struct {
@@ -603,23 +244,154 @@ func (fake *FakeControllerClient) ControllerGetCapabilitiesReturnsOnCall(i int, 
 	}{result1, result2}
 }
 
-func (fake *FakeControllerClient) CreateSnapshot(ctx context.Context, in *csi.CreateSnapshotRequest, opts ...grpc.CallOption) (*csi.CreateSnapshotResponse, error) {
-	fake.createSnapshotMutex.Lock()
-	ret, specificReturn := fake.createSnapshotReturnsOnCall[len(fake.createSnapshotArgsForCall)]
-	fake.createSnapshotArgsForCall = append(fake.createSnapshotArgsForCall, struct {
-		ctx  context.Context
-		in   *csi.CreateSnapshotRequest
-		opts []grpc.CallOption
-	}{ctx, in, opts})
-	fake.recordInvocation("CreateSnapshot", []interface{}{ctx, in, opts})
-	fake.createSnapshotMutex.Unlock()
-	if fake.CreateSnapshotStub != nil {
-		return fake.CreateSnapshotStub(ctx, in, opts...)
+func (fake *FakeControllerClient) ControllerPublishVolume(arg1 context.Context, arg2 *csi.ControllerPublishVolumeRequest, arg3 ...grpc.CallOption) (*csi.ControllerPublishVolumeResponse, error) {
+	fake.controllerPublishVolumeMutex.Lock()
+	ret, specificReturn := fake.controllerPublishVolumeReturnsOnCall[len(fake.controllerPublishVolumeArgsForCall)]
+	fake.controllerPublishVolumeArgsForCall = append(fake.controllerPublishVolumeArgsForCall, struct {
+		arg1 context.Context
+		arg2 *csi.ControllerPublishVolumeRequest
+		arg3 []grpc.CallOption
+	}{arg1, arg2, arg3})
+	fake.recordInvocation("ControllerPublishVolume", []interface{}{arg1, arg2, arg3})
+	fake.controllerPublishVolumeMutex.Unlock()
+	if fake.ControllerPublishVolumeStub != nil {
+		return fake.ControllerPublishVolumeStub(arg1, arg2, arg3...)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.createSnapshotReturns.result1, fake.createSnapshotReturns.result2
+	fakeReturns := fake.controllerPublishVolumeReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeControllerClient) ControllerPublishVolumeCallCount() int {
+	fake.controllerPublishVolumeMutex.RLock()
+	defer fake.controllerPublishVolumeMutex.RUnlock()
+	return len(fake.controllerPublishVolumeArgsForCall)
+}
+
+func (fake *FakeControllerClient) ControllerPublishVolumeCalls(stub func(context.Context, *csi.ControllerPublishVolumeRequest, ...grpc.CallOption) (*csi.ControllerPublishVolumeResponse, error)) {
+	fake.controllerPublishVolumeMutex.Lock()
+	defer fake.controllerPublishVolumeMutex.Unlock()
+	fake.ControllerPublishVolumeStub = stub
+}
+
+func (fake *FakeControllerClient) ControllerPublishVolumeArgsForCall(i int) (context.Context, *csi.ControllerPublishVolumeRequest, []grpc.CallOption) {
+	fake.controllerPublishVolumeMutex.RLock()
+	defer fake.controllerPublishVolumeMutex.RUnlock()
+	argsForCall := fake.controllerPublishVolumeArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeControllerClient) ControllerPublishVolumeReturns(result1 *csi.ControllerPublishVolumeResponse, result2 error) {
+	fake.controllerPublishVolumeMutex.Lock()
+	defer fake.controllerPublishVolumeMutex.Unlock()
+	fake.ControllerPublishVolumeStub = nil
+	fake.controllerPublishVolumeReturns = struct {
+		result1 *csi.ControllerPublishVolumeResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeControllerClient) ControllerPublishVolumeReturnsOnCall(i int, result1 *csi.ControllerPublishVolumeResponse, result2 error) {
+	fake.controllerPublishVolumeMutex.Lock()
+	defer fake.controllerPublishVolumeMutex.Unlock()
+	fake.ControllerPublishVolumeStub = nil
+	if fake.controllerPublishVolumeReturnsOnCall == nil {
+		fake.controllerPublishVolumeReturnsOnCall = make(map[int]struct {
+			result1 *csi.ControllerPublishVolumeResponse
+			result2 error
+		})
+	}
+	fake.controllerPublishVolumeReturnsOnCall[i] = struct {
+		result1 *csi.ControllerPublishVolumeResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeControllerClient) ControllerUnpublishVolume(arg1 context.Context, arg2 *csi.ControllerUnpublishVolumeRequest, arg3 ...grpc.CallOption) (*csi.ControllerUnpublishVolumeResponse, error) {
+	fake.controllerUnpublishVolumeMutex.Lock()
+	ret, specificReturn := fake.controllerUnpublishVolumeReturnsOnCall[len(fake.controllerUnpublishVolumeArgsForCall)]
+	fake.controllerUnpublishVolumeArgsForCall = append(fake.controllerUnpublishVolumeArgsForCall, struct {
+		arg1 context.Context
+		arg2 *csi.ControllerUnpublishVolumeRequest
+		arg3 []grpc.CallOption
+	}{arg1, arg2, arg3})
+	fake.recordInvocation("ControllerUnpublishVolume", []interface{}{arg1, arg2, arg3})
+	fake.controllerUnpublishVolumeMutex.Unlock()
+	if fake.ControllerUnpublishVolumeStub != nil {
+		return fake.ControllerUnpublishVolumeStub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.controllerUnpublishVolumeReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeControllerClient) ControllerUnpublishVolumeCallCount() int {
+	fake.controllerUnpublishVolumeMutex.RLock()
+	defer fake.controllerUnpublishVolumeMutex.RUnlock()
+	return len(fake.controllerUnpublishVolumeArgsForCall)
+}
+
+func (fake *FakeControllerClient) ControllerUnpublishVolumeCalls(stub func(context.Context, *csi.ControllerUnpublishVolumeRequest, ...grpc.CallOption) (*csi.ControllerUnpublishVolumeResponse, error)) {
+	fake.controllerUnpublishVolumeMutex.Lock()
+	defer fake.controllerUnpublishVolumeMutex.Unlock()
+	fake.ControllerUnpublishVolumeStub = stub
+}
+
+func (fake *FakeControllerClient) ControllerUnpublishVolumeArgsForCall(i int) (context.Context, *csi.ControllerUnpublishVolumeRequest, []grpc.CallOption) {
+	fake.controllerUnpublishVolumeMutex.RLock()
+	defer fake.controllerUnpublishVolumeMutex.RUnlock()
+	argsForCall := fake.controllerUnpublishVolumeArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeControllerClient) ControllerUnpublishVolumeReturns(result1 *csi.ControllerUnpublishVolumeResponse, result2 error) {
+	fake.controllerUnpublishVolumeMutex.Lock()
+	defer fake.controllerUnpublishVolumeMutex.Unlock()
+	fake.ControllerUnpublishVolumeStub = nil
+	fake.controllerUnpublishVolumeReturns = struct {
+		result1 *csi.ControllerUnpublishVolumeResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeControllerClient) ControllerUnpublishVolumeReturnsOnCall(i int, result1 *csi.ControllerUnpublishVolumeResponse, result2 error) {
+	fake.controllerUnpublishVolumeMutex.Lock()
+	defer fake.controllerUnpublishVolumeMutex.Unlock()
+	fake.ControllerUnpublishVolumeStub = nil
+	if fake.controllerUnpublishVolumeReturnsOnCall == nil {
+		fake.controllerUnpublishVolumeReturnsOnCall = make(map[int]struct {
+			result1 *csi.ControllerUnpublishVolumeResponse
+			result2 error
+		})
+	}
+	fake.controllerUnpublishVolumeReturnsOnCall[i] = struct {
+		result1 *csi.ControllerUnpublishVolumeResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeControllerClient) CreateSnapshot(arg1 context.Context, arg2 *csi.CreateSnapshotRequest, arg3 ...grpc.CallOption) (*csi.CreateSnapshotResponse, error) {
+	fake.createSnapshotMutex.Lock()
+	ret, specificReturn := fake.createSnapshotReturnsOnCall[len(fake.createSnapshotArgsForCall)]
+	fake.createSnapshotArgsForCall = append(fake.createSnapshotArgsForCall, struct {
+		arg1 context.Context
+		arg2 *csi.CreateSnapshotRequest
+		arg3 []grpc.CallOption
+	}{arg1, arg2, arg3})
+	fake.recordInvocation("CreateSnapshot", []interface{}{arg1, arg2, arg3})
+	fake.createSnapshotMutex.Unlock()
+	if fake.CreateSnapshotStub != nil {
+		return fake.CreateSnapshotStub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.createSnapshotReturns
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeControllerClient) CreateSnapshotCallCount() int {
@@ -628,13 +400,22 @@ func (fake *FakeControllerClient) CreateSnapshotCallCount() int {
 	return len(fake.createSnapshotArgsForCall)
 }
 
+func (fake *FakeControllerClient) CreateSnapshotCalls(stub func(context.Context, *csi.CreateSnapshotRequest, ...grpc.CallOption) (*csi.CreateSnapshotResponse, error)) {
+	fake.createSnapshotMutex.Lock()
+	defer fake.createSnapshotMutex.Unlock()
+	fake.CreateSnapshotStub = stub
+}
+
 func (fake *FakeControllerClient) CreateSnapshotArgsForCall(i int) (context.Context, *csi.CreateSnapshotRequest, []grpc.CallOption) {
 	fake.createSnapshotMutex.RLock()
 	defer fake.createSnapshotMutex.RUnlock()
-	return fake.createSnapshotArgsForCall[i].ctx, fake.createSnapshotArgsForCall[i].in, fake.createSnapshotArgsForCall[i].opts
+	argsForCall := fake.createSnapshotArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
 }
 
 func (fake *FakeControllerClient) CreateSnapshotReturns(result1 *csi.CreateSnapshotResponse, result2 error) {
+	fake.createSnapshotMutex.Lock()
+	defer fake.createSnapshotMutex.Unlock()
 	fake.CreateSnapshotStub = nil
 	fake.createSnapshotReturns = struct {
 		result1 *csi.CreateSnapshotResponse
@@ -643,6 +424,8 @@ func (fake *FakeControllerClient) CreateSnapshotReturns(result1 *csi.CreateSnaps
 }
 
 func (fake *FakeControllerClient) CreateSnapshotReturnsOnCall(i int, result1 *csi.CreateSnapshotResponse, result2 error) {
+	fake.createSnapshotMutex.Lock()
+	defer fake.createSnapshotMutex.Unlock()
 	fake.CreateSnapshotStub = nil
 	if fake.createSnapshotReturnsOnCall == nil {
 		fake.createSnapshotReturnsOnCall = make(map[int]struct {
@@ -656,23 +439,89 @@ func (fake *FakeControllerClient) CreateSnapshotReturnsOnCall(i int, result1 *cs
 	}{result1, result2}
 }
 
-func (fake *FakeControllerClient) DeleteSnapshot(ctx context.Context, in *csi.DeleteSnapshotRequest, opts ...grpc.CallOption) (*csi.DeleteSnapshotResponse, error) {
-	fake.deleteSnapshotMutex.Lock()
-	ret, specificReturn := fake.deleteSnapshotReturnsOnCall[len(fake.deleteSnapshotArgsForCall)]
-	fake.deleteSnapshotArgsForCall = append(fake.deleteSnapshotArgsForCall, struct {
-		ctx  context.Context
-		in   *csi.DeleteSnapshotRequest
-		opts []grpc.CallOption
-	}{ctx, in, opts})
-	fake.recordInvocation("DeleteSnapshot", []interface{}{ctx, in, opts})
-	fake.deleteSnapshotMutex.Unlock()
-	if fake.DeleteSnapshotStub != nil {
-		return fake.DeleteSnapshotStub(ctx, in, opts...)
+func (fake *FakeControllerClient) CreateVolume(arg1 context.Context, arg2 *csi.CreateVolumeRequest, arg3 ...grpc.CallOption) (*csi.CreateVolumeResponse, error) {
+	fake.createVolumeMutex.Lock()
+	ret, specificReturn := fake.createVolumeReturnsOnCall[len(fake.createVolumeArgsForCall)]
+	fake.createVolumeArgsForCall = append(fake.createVolumeArgsForCall, struct {
+		arg1 context.Context
+		arg2 *csi.CreateVolumeRequest
+		arg3 []grpc.CallOption
+	}{arg1, arg2, arg3})
+	fake.recordInvocation("CreateVolume", []interface{}{arg1, arg2, arg3})
+	fake.createVolumeMutex.Unlock()
+	if fake.CreateVolumeStub != nil {
+		return fake.CreateVolumeStub(arg1, arg2, arg3...)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.deleteSnapshotReturns.result1, fake.deleteSnapshotReturns.result2
+	fakeReturns := fake.createVolumeReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeControllerClient) CreateVolumeCallCount() int {
+	fake.createVolumeMutex.RLock()
+	defer fake.createVolumeMutex.RUnlock()
+	return len(fake.createVolumeArgsForCall)
+}
+
+func (fake *FakeControllerClient) CreateVolumeCalls(stub func(context.Context, *csi.CreateVolumeRequest, ...grpc.CallOption) (*csi.CreateVolumeResponse, error)) {
+	fake.createVolumeMutex.Lock()
+	defer fake.createVolumeMutex.Unlock()
+	fake.CreateVolumeStub = stub
+}
+
+func (fake *FakeControllerClient) CreateVolumeArgsForCall(i int) (context.Context, *csi.CreateVolumeRequest, []grpc.CallOption) {
+	fake.createVolumeMutex.RLock()
+	defer fake.createVolumeMutex.RUnlock()
+	argsForCall := fake.createVolumeArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeControllerClient) CreateVolumeReturns(result1 *csi.CreateVolumeResponse, result2 error) {
+	fake.createVolumeMutex.Lock()
+	defer fake.createVolumeMutex.Unlock()
+	fake.CreateVolumeStub = nil
+	fake.createVolumeReturns = struct {
+		result1 *csi.CreateVolumeResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeControllerClient) CreateVolumeReturnsOnCall(i int, result1 *csi.CreateVolumeResponse, result2 error) {
+	fake.createVolumeMutex.Lock()
+	defer fake.createVolumeMutex.Unlock()
+	fake.CreateVolumeStub = nil
+	if fake.createVolumeReturnsOnCall == nil {
+		fake.createVolumeReturnsOnCall = make(map[int]struct {
+			result1 *csi.CreateVolumeResponse
+			result2 error
+		})
+	}
+	fake.createVolumeReturnsOnCall[i] = struct {
+		result1 *csi.CreateVolumeResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeControllerClient) DeleteSnapshot(arg1 context.Context, arg2 *csi.DeleteSnapshotRequest, arg3 ...grpc.CallOption) (*csi.DeleteSnapshotResponse, error) {
+	fake.deleteSnapshotMutex.Lock()
+	ret, specificReturn := fake.deleteSnapshotReturnsOnCall[len(fake.deleteSnapshotArgsForCall)]
+	fake.deleteSnapshotArgsForCall = append(fake.deleteSnapshotArgsForCall, struct {
+		arg1 context.Context
+		arg2 *csi.DeleteSnapshotRequest
+		arg3 []grpc.CallOption
+	}{arg1, arg2, arg3})
+	fake.recordInvocation("DeleteSnapshot", []interface{}{arg1, arg2, arg3})
+	fake.deleteSnapshotMutex.Unlock()
+	if fake.DeleteSnapshotStub != nil {
+		return fake.DeleteSnapshotStub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.deleteSnapshotReturns
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeControllerClient) DeleteSnapshotCallCount() int {
@@ -681,13 +530,22 @@ func (fake *FakeControllerClient) DeleteSnapshotCallCount() int {
 	return len(fake.deleteSnapshotArgsForCall)
 }
 
+func (fake *FakeControllerClient) DeleteSnapshotCalls(stub func(context.Context, *csi.DeleteSnapshotRequest, ...grpc.CallOption) (*csi.DeleteSnapshotResponse, error)) {
+	fake.deleteSnapshotMutex.Lock()
+	defer fake.deleteSnapshotMutex.Unlock()
+	fake.DeleteSnapshotStub = stub
+}
+
 func (fake *FakeControllerClient) DeleteSnapshotArgsForCall(i int) (context.Context, *csi.DeleteSnapshotRequest, []grpc.CallOption) {
 	fake.deleteSnapshotMutex.RLock()
 	defer fake.deleteSnapshotMutex.RUnlock()
-	return fake.deleteSnapshotArgsForCall[i].ctx, fake.deleteSnapshotArgsForCall[i].in, fake.deleteSnapshotArgsForCall[i].opts
+	argsForCall := fake.deleteSnapshotArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
 }
 
 func (fake *FakeControllerClient) DeleteSnapshotReturns(result1 *csi.DeleteSnapshotResponse, result2 error) {
+	fake.deleteSnapshotMutex.Lock()
+	defer fake.deleteSnapshotMutex.Unlock()
 	fake.DeleteSnapshotStub = nil
 	fake.deleteSnapshotReturns = struct {
 		result1 *csi.DeleteSnapshotResponse
@@ -696,6 +554,8 @@ func (fake *FakeControllerClient) DeleteSnapshotReturns(result1 *csi.DeleteSnaps
 }
 
 func (fake *FakeControllerClient) DeleteSnapshotReturnsOnCall(i int, result1 *csi.DeleteSnapshotResponse, result2 error) {
+	fake.deleteSnapshotMutex.Lock()
+	defer fake.deleteSnapshotMutex.Unlock()
 	fake.DeleteSnapshotStub = nil
 	if fake.deleteSnapshotReturnsOnCall == nil {
 		fake.deleteSnapshotReturnsOnCall = make(map[int]struct {
@@ -709,23 +569,154 @@ func (fake *FakeControllerClient) DeleteSnapshotReturnsOnCall(i int, result1 *cs
 	}{result1, result2}
 }
 
-func (fake *FakeControllerClient) ListSnapshots(ctx context.Context, in *csi.ListSnapshotsRequest, opts ...grpc.CallOption) (*csi.ListSnapshotsResponse, error) {
-	fake.listSnapshotsMutex.Lock()
-	ret, specificReturn := fake.listSnapshotsReturnsOnCall[len(fake.listSnapshotsArgsForCall)]
-	fake.listSnapshotsArgsForCall = append(fake.listSnapshotsArgsForCall, struct {
-		ctx  context.Context
-		in   *csi.ListSnapshotsRequest
-		opts []grpc.CallOption
-	}{ctx, in, opts})
-	fake.recordInvocation("ListSnapshots", []interface{}{ctx, in, opts})
-	fake.listSnapshotsMutex.Unlock()
-	if fake.ListSnapshotsStub != nil {
-		return fake.ListSnapshotsStub(ctx, in, opts...)
+func (fake *FakeControllerClient) DeleteVolume(arg1 context.Context, arg2 *csi.DeleteVolumeRequest, arg3 ...grpc.CallOption) (*csi.DeleteVolumeResponse, error) {
+	fake.deleteVolumeMutex.Lock()
+	ret, specificReturn := fake.deleteVolumeReturnsOnCall[len(fake.deleteVolumeArgsForCall)]
+	fake.deleteVolumeArgsForCall = append(fake.deleteVolumeArgsForCall, struct {
+		arg1 context.Context
+		arg2 *csi.DeleteVolumeRequest
+		arg3 []grpc.CallOption
+	}{arg1, arg2, arg3})
+	fake.recordInvocation("DeleteVolume", []interface{}{arg1, arg2, arg3})
+	fake.deleteVolumeMutex.Unlock()
+	if fake.DeleteVolumeStub != nil {
+		return fake.DeleteVolumeStub(arg1, arg2, arg3...)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.listSnapshotsReturns.result1, fake.listSnapshotsReturns.result2
+	fakeReturns := fake.deleteVolumeReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeControllerClient) DeleteVolumeCallCount() int {
+	fake.deleteVolumeMutex.RLock()
+	defer fake.deleteVolumeMutex.RUnlock()
+	return len(fake.deleteVolumeArgsForCall)
+}
+
+func (fake *FakeControllerClient) DeleteVolumeCalls(stub func(context.Context, *csi.DeleteVolumeRequest, ...grpc.CallOption) (*csi.DeleteVolumeResponse, error)) {
+	fake.deleteVolumeMutex.Lock()
+	defer fake.deleteVolumeMutex.Unlock()
+	fake.DeleteVolumeStub = stub
+}
+
+func (fake *FakeControllerClient) DeleteVolumeArgsForCall(i int) (context.Context, *csi.DeleteVolumeRequest, []grpc.CallOption) {
+	fake.deleteVolumeMutex.RLock()
+	defer fake.deleteVolumeMutex.RUnlock()
+	argsForCall := fake.deleteVolumeArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeControllerClient) DeleteVolumeReturns(result1 *csi.DeleteVolumeResponse, result2 error) {
+	fake.deleteVolumeMutex.Lock()
+	defer fake.deleteVolumeMutex.Unlock()
+	fake.DeleteVolumeStub = nil
+	fake.deleteVolumeReturns = struct {
+		result1 *csi.DeleteVolumeResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeControllerClient) DeleteVolumeReturnsOnCall(i int, result1 *csi.DeleteVolumeResponse, result2 error) {
+	fake.deleteVolumeMutex.Lock()
+	defer fake.deleteVolumeMutex.Unlock()
+	fake.DeleteVolumeStub = nil
+	if fake.deleteVolumeReturnsOnCall == nil {
+		fake.deleteVolumeReturnsOnCall = make(map[int]struct {
+			result1 *csi.DeleteVolumeResponse
+			result2 error
+		})
+	}
+	fake.deleteVolumeReturnsOnCall[i] = struct {
+		result1 *csi.DeleteVolumeResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeControllerClient) GetCapacity(arg1 context.Context, arg2 *csi.GetCapacityRequest, arg3 ...grpc.CallOption) (*csi.GetCapacityResponse, error) {
+	fake.getCapacityMutex.Lock()
+	ret, specificReturn := fake.getCapacityReturnsOnCall[len(fake.getCapacityArgsForCall)]
+	fake.getCapacityArgsForCall = append(fake.getCapacityArgsForCall, struct {
+		arg1 context.Context
+		arg2 *csi.GetCapacityRequest
+		arg3 []grpc.CallOption
+	}{arg1, arg2, arg3})
+	fake.recordInvocation("GetCapacity", []interface{}{arg1, arg2, arg3})
+	fake.getCapacityMutex.Unlock()
+	if fake.GetCapacityStub != nil {
+		return fake.GetCapacityStub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.getCapacityReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeControllerClient) GetCapacityCallCount() int {
+	fake.getCapacityMutex.RLock()
+	defer fake.getCapacityMutex.RUnlock()
+	return len(fake.getCapacityArgsForCall)
+}
+
+func (fake *FakeControllerClient) GetCapacityCalls(stub func(context.Context, *csi.GetCapacityRequest, ...grpc.CallOption) (*csi.GetCapacityResponse, error)) {
+	fake.getCapacityMutex.Lock()
+	defer fake.getCapacityMutex.Unlock()
+	fake.GetCapacityStub = stub
+}
+
+func (fake *FakeControllerClient) GetCapacityArgsForCall(i int) (context.Context, *csi.GetCapacityRequest, []grpc.CallOption) {
+	fake.getCapacityMutex.RLock()
+	defer fake.getCapacityMutex.RUnlock()
+	argsForCall := fake.getCapacityArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeControllerClient) GetCapacityReturns(result1 *csi.GetCapacityResponse, result2 error) {
+	fake.getCapacityMutex.Lock()
+	defer fake.getCapacityMutex.Unlock()
+	fake.GetCapacityStub = nil
+	fake.getCapacityReturns = struct {
+		result1 *csi.GetCapacityResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeControllerClient) GetCapacityReturnsOnCall(i int, result1 *csi.GetCapacityResponse, result2 error) {
+	fake.getCapacityMutex.Lock()
+	defer fake.getCapacityMutex.Unlock()
+	fake.GetCapacityStub = nil
+	if fake.getCapacityReturnsOnCall == nil {
+		fake.getCapacityReturnsOnCall = make(map[int]struct {
+			result1 *csi.GetCapacityResponse
+			result2 error
+		})
+	}
+	fake.getCapacityReturnsOnCall[i] = struct {
+		result1 *csi.GetCapacityResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeControllerClient) ListSnapshots(arg1 context.Context, arg2 *csi.ListSnapshotsRequest, arg3 ...grpc.CallOption) (*csi.ListSnapshotsResponse, error) {
+	fake.listSnapshotsMutex.Lock()
+	ret, specificReturn := fake.listSnapshotsReturnsOnCall[len(fake.listSnapshotsArgsForCall)]
+	fake.listSnapshotsArgsForCall = append(fake.listSnapshotsArgsForCall, struct {
+		arg1 context.Context
+		arg2 *csi.ListSnapshotsRequest
+		arg3 []grpc.CallOption
+	}{arg1, arg2, arg3})
+	fake.recordInvocation("ListSnapshots", []interface{}{arg1, arg2, arg3})
+	fake.listSnapshotsMutex.Unlock()
+	if fake.ListSnapshotsStub != nil {
+		return fake.ListSnapshotsStub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.listSnapshotsReturns
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeControllerClient) ListSnapshotsCallCount() int {
@@ -734,13 +725,22 @@ func (fake *FakeControllerClient) ListSnapshotsCallCount() int {
 	return len(fake.listSnapshotsArgsForCall)
 }
 
+func (fake *FakeControllerClient) ListSnapshotsCalls(stub func(context.Context, *csi.ListSnapshotsRequest, ...grpc.CallOption) (*csi.ListSnapshotsResponse, error)) {
+	fake.listSnapshotsMutex.Lock()
+	defer fake.listSnapshotsMutex.Unlock()
+	fake.ListSnapshotsStub = stub
+}
+
 func (fake *FakeControllerClient) ListSnapshotsArgsForCall(i int) (context.Context, *csi.ListSnapshotsRequest, []grpc.CallOption) {
 	fake.listSnapshotsMutex.RLock()
 	defer fake.listSnapshotsMutex.RUnlock()
-	return fake.listSnapshotsArgsForCall[i].ctx, fake.listSnapshotsArgsForCall[i].in, fake.listSnapshotsArgsForCall[i].opts
+	argsForCall := fake.listSnapshotsArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
 }
 
 func (fake *FakeControllerClient) ListSnapshotsReturns(result1 *csi.ListSnapshotsResponse, result2 error) {
+	fake.listSnapshotsMutex.Lock()
+	defer fake.listSnapshotsMutex.Unlock()
 	fake.ListSnapshotsStub = nil
 	fake.listSnapshotsReturns = struct {
 		result1 *csi.ListSnapshotsResponse
@@ -749,6 +749,8 @@ func (fake *FakeControllerClient) ListSnapshotsReturns(result1 *csi.ListSnapshot
 }
 
 func (fake *FakeControllerClient) ListSnapshotsReturnsOnCall(i int, result1 *csi.ListSnapshotsResponse, result2 error) {
+	fake.listSnapshotsMutex.Lock()
+	defer fake.listSnapshotsMutex.Unlock()
 	fake.ListSnapshotsStub = nil
 	if fake.listSnapshotsReturnsOnCall == nil {
 		fake.listSnapshotsReturnsOnCall = make(map[int]struct {
@@ -762,31 +764,161 @@ func (fake *FakeControllerClient) ListSnapshotsReturnsOnCall(i int, result1 *csi
 	}{result1, result2}
 }
 
+func (fake *FakeControllerClient) ListVolumes(arg1 context.Context, arg2 *csi.ListVolumesRequest, arg3 ...grpc.CallOption) (*csi.ListVolumesResponse, error) {
+	fake.listVolumesMutex.Lock()
+	ret, specificReturn := fake.listVolumesReturnsOnCall[len(fake.listVolumesArgsForCall)]
+	fake.listVolumesArgsForCall = append(fake.listVolumesArgsForCall, struct {
+		arg1 context.Context
+		arg2 *csi.ListVolumesRequest
+		arg3 []grpc.CallOption
+	}{arg1, arg2, arg3})
+	fake.recordInvocation("ListVolumes", []interface{}{arg1, arg2, arg3})
+	fake.listVolumesMutex.Unlock()
+	if fake.ListVolumesStub != nil {
+		return fake.ListVolumesStub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.listVolumesReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeControllerClient) ListVolumesCallCount() int {
+	fake.listVolumesMutex.RLock()
+	defer fake.listVolumesMutex.RUnlock()
+	return len(fake.listVolumesArgsForCall)
+}
+
+func (fake *FakeControllerClient) ListVolumesCalls(stub func(context.Context, *csi.ListVolumesRequest, ...grpc.CallOption) (*csi.ListVolumesResponse, error)) {
+	fake.listVolumesMutex.Lock()
+	defer fake.listVolumesMutex.Unlock()
+	fake.ListVolumesStub = stub
+}
+
+func (fake *FakeControllerClient) ListVolumesArgsForCall(i int) (context.Context, *csi.ListVolumesRequest, []grpc.CallOption) {
+	fake.listVolumesMutex.RLock()
+	defer fake.listVolumesMutex.RUnlock()
+	argsForCall := fake.listVolumesArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeControllerClient) ListVolumesReturns(result1 *csi.ListVolumesResponse, result2 error) {
+	fake.listVolumesMutex.Lock()
+	defer fake.listVolumesMutex.Unlock()
+	fake.ListVolumesStub = nil
+	fake.listVolumesReturns = struct {
+		result1 *csi.ListVolumesResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeControllerClient) ListVolumesReturnsOnCall(i int, result1 *csi.ListVolumesResponse, result2 error) {
+	fake.listVolumesMutex.Lock()
+	defer fake.listVolumesMutex.Unlock()
+	fake.ListVolumesStub = nil
+	if fake.listVolumesReturnsOnCall == nil {
+		fake.listVolumesReturnsOnCall = make(map[int]struct {
+			result1 *csi.ListVolumesResponse
+			result2 error
+		})
+	}
+	fake.listVolumesReturnsOnCall[i] = struct {
+		result1 *csi.ListVolumesResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeControllerClient) ValidateVolumeCapabilities(arg1 context.Context, arg2 *csi.ValidateVolumeCapabilitiesRequest, arg3 ...grpc.CallOption) (*csi.ValidateVolumeCapabilitiesResponse, error) {
+	fake.validateVolumeCapabilitiesMutex.Lock()
+	ret, specificReturn := fake.validateVolumeCapabilitiesReturnsOnCall[len(fake.validateVolumeCapabilitiesArgsForCall)]
+	fake.validateVolumeCapabilitiesArgsForCall = append(fake.validateVolumeCapabilitiesArgsForCall, struct {
+		arg1 context.Context
+		arg2 *csi.ValidateVolumeCapabilitiesRequest
+		arg3 []grpc.CallOption
+	}{arg1, arg2, arg3})
+	fake.recordInvocation("ValidateVolumeCapabilities", []interface{}{arg1, arg2, arg3})
+	fake.validateVolumeCapabilitiesMutex.Unlock()
+	if fake.ValidateVolumeCapabilitiesStub != nil {
+		return fake.ValidateVolumeCapabilitiesStub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.validateVolumeCapabilitiesReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeControllerClient) ValidateVolumeCapabilitiesCallCount() int {
+	fake.validateVolumeCapabilitiesMutex.RLock()
+	defer fake.validateVolumeCapabilitiesMutex.RUnlock()
+	return len(fake.validateVolumeCapabilitiesArgsForCall)
+}
+
+func (fake *FakeControllerClient) ValidateVolumeCapabilitiesCalls(stub func(context.Context, *csi.ValidateVolumeCapabilitiesRequest, ...grpc.CallOption) (*csi.ValidateVolumeCapabilitiesResponse, error)) {
+	fake.validateVolumeCapabilitiesMutex.Lock()
+	defer fake.validateVolumeCapabilitiesMutex.Unlock()
+	fake.ValidateVolumeCapabilitiesStub = stub
+}
+
+func (fake *FakeControllerClient) ValidateVolumeCapabilitiesArgsForCall(i int) (context.Context, *csi.ValidateVolumeCapabilitiesRequest, []grpc.CallOption) {
+	fake.validateVolumeCapabilitiesMutex.RLock()
+	defer fake.validateVolumeCapabilitiesMutex.RUnlock()
+	argsForCall := fake.validateVolumeCapabilitiesArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeControllerClient) ValidateVolumeCapabilitiesReturns(result1 *csi.ValidateVolumeCapabilitiesResponse, result2 error) {
+	fake.validateVolumeCapabilitiesMutex.Lock()
+	defer fake.validateVolumeCapabilitiesMutex.Unlock()
+	fake.ValidateVolumeCapabilitiesStub = nil
+	fake.validateVolumeCapabilitiesReturns = struct {
+		result1 *csi.ValidateVolumeCapabilitiesResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeControllerClient) ValidateVolumeCapabilitiesReturnsOnCall(i int, result1 *csi.ValidateVolumeCapabilitiesResponse, result2 error) {
+	fake.validateVolumeCapabilitiesMutex.Lock()
+	defer fake.validateVolumeCapabilitiesMutex.Unlock()
+	fake.ValidateVolumeCapabilitiesStub = nil
+	if fake.validateVolumeCapabilitiesReturnsOnCall == nil {
+		fake.validateVolumeCapabilitiesReturnsOnCall = make(map[int]struct {
+			result1 *csi.ValidateVolumeCapabilitiesResponse
+			result2 error
+		})
+	}
+	fake.validateVolumeCapabilitiesReturnsOnCall[i] = struct {
+		result1 *csi.ValidateVolumeCapabilitiesResponse
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeControllerClient) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
-	fake.createVolumeMutex.RLock()
-	defer fake.createVolumeMutex.RUnlock()
-	fake.deleteVolumeMutex.RLock()
-	defer fake.deleteVolumeMutex.RUnlock()
+	fake.controllerGetCapabilitiesMutex.RLock()
+	defer fake.controllerGetCapabilitiesMutex.RUnlock()
 	fake.controllerPublishVolumeMutex.RLock()
 	defer fake.controllerPublishVolumeMutex.RUnlock()
 	fake.controllerUnpublishVolumeMutex.RLock()
 	defer fake.controllerUnpublishVolumeMutex.RUnlock()
-	fake.validateVolumeCapabilitiesMutex.RLock()
-	defer fake.validateVolumeCapabilitiesMutex.RUnlock()
-	fake.listVolumesMutex.RLock()
-	defer fake.listVolumesMutex.RUnlock()
-	fake.getCapacityMutex.RLock()
-	defer fake.getCapacityMutex.RUnlock()
-	fake.controllerGetCapabilitiesMutex.RLock()
-	defer fake.controllerGetCapabilitiesMutex.RUnlock()
 	fake.createSnapshotMutex.RLock()
 	defer fake.createSnapshotMutex.RUnlock()
+	fake.createVolumeMutex.RLock()
+	defer fake.createVolumeMutex.RUnlock()
 	fake.deleteSnapshotMutex.RLock()
 	defer fake.deleteSnapshotMutex.RUnlock()
+	fake.deleteVolumeMutex.RLock()
+	defer fake.deleteVolumeMutex.RUnlock()
+	fake.getCapacityMutex.RLock()
+	defer fake.getCapacityMutex.RUnlock()
 	fake.listSnapshotsMutex.RLock()
 	defer fake.listSnapshotsMutex.RUnlock()
+	fake.listVolumesMutex.RLock()
+	defer fake.listVolumesMutex.RUnlock()
+	fake.validateVolumeCapabilitiesMutex.RLock()
+	defer fake.validateVolumeCapabilitiesMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

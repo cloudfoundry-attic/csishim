@@ -2,95 +2,20 @@
 package csi_fake
 
 import (
-	"sync"
+	context "context"
+	sync "sync"
 
-	csi "github.com/container-storage-interface/spec/lib/go/csi/v0"
-	"golang.org/x/net/context"
-	"google.golang.org/grpc"
+	csi "github.com/container-storage-interface/spec/lib/go/csi"
+	grpc "google.golang.org/grpc"
 )
 
 type FakeNodeClient struct {
-	NodeStageVolumeStub        func(ctx context.Context, in *csi.NodeStageVolumeRequest, opts ...grpc.CallOption) (*csi.NodeStageVolumeResponse, error)
-	nodeStageVolumeMutex       sync.RWMutex
-	nodeStageVolumeArgsForCall []struct {
-		ctx  context.Context
-		in   *csi.NodeStageVolumeRequest
-		opts []grpc.CallOption
-	}
-	nodeStageVolumeReturns struct {
-		result1 *csi.NodeStageVolumeResponse
-		result2 error
-	}
-	nodeStageVolumeReturnsOnCall map[int]struct {
-		result1 *csi.NodeStageVolumeResponse
-		result2 error
-	}
-	NodeUnstageVolumeStub        func(ctx context.Context, in *csi.NodeUnstageVolumeRequest, opts ...grpc.CallOption) (*csi.NodeUnstageVolumeResponse, error)
-	nodeUnstageVolumeMutex       sync.RWMutex
-	nodeUnstageVolumeArgsForCall []struct {
-		ctx  context.Context
-		in   *csi.NodeUnstageVolumeRequest
-		opts []grpc.CallOption
-	}
-	nodeUnstageVolumeReturns struct {
-		result1 *csi.NodeUnstageVolumeResponse
-		result2 error
-	}
-	nodeUnstageVolumeReturnsOnCall map[int]struct {
-		result1 *csi.NodeUnstageVolumeResponse
-		result2 error
-	}
-	NodePublishVolumeStub        func(ctx context.Context, in *csi.NodePublishVolumeRequest, opts ...grpc.CallOption) (*csi.NodePublishVolumeResponse, error)
-	nodePublishVolumeMutex       sync.RWMutex
-	nodePublishVolumeArgsForCall []struct {
-		ctx  context.Context
-		in   *csi.NodePublishVolumeRequest
-		opts []grpc.CallOption
-	}
-	nodePublishVolumeReturns struct {
-		result1 *csi.NodePublishVolumeResponse
-		result2 error
-	}
-	nodePublishVolumeReturnsOnCall map[int]struct {
-		result1 *csi.NodePublishVolumeResponse
-		result2 error
-	}
-	NodeUnpublishVolumeStub        func(ctx context.Context, in *csi.NodeUnpublishVolumeRequest, opts ...grpc.CallOption) (*csi.NodeUnpublishVolumeResponse, error)
-	nodeUnpublishVolumeMutex       sync.RWMutex
-	nodeUnpublishVolumeArgsForCall []struct {
-		ctx  context.Context
-		in   *csi.NodeUnpublishVolumeRequest
-		opts []grpc.CallOption
-	}
-	nodeUnpublishVolumeReturns struct {
-		result1 *csi.NodeUnpublishVolumeResponse
-		result2 error
-	}
-	nodeUnpublishVolumeReturnsOnCall map[int]struct {
-		result1 *csi.NodeUnpublishVolumeResponse
-		result2 error
-	}
-	NodeGetIdStub        func(ctx context.Context, in *csi.NodeGetIdRequest, opts ...grpc.CallOption) (*csi.NodeGetIdResponse, error)
-	nodeGetIdMutex       sync.RWMutex
-	nodeGetIdArgsForCall []struct {
-		ctx  context.Context
-		in   *csi.NodeGetIdRequest
-		opts []grpc.CallOption
-	}
-	nodeGetIdReturns struct {
-		result1 *csi.NodeGetIdResponse
-		result2 error
-	}
-	nodeGetIdReturnsOnCall map[int]struct {
-		result1 *csi.NodeGetIdResponse
-		result2 error
-	}
-	NodeGetCapabilitiesStub        func(ctx context.Context, in *csi.NodeGetCapabilitiesRequest, opts ...grpc.CallOption) (*csi.NodeGetCapabilitiesResponse, error)
+	NodeGetCapabilitiesStub        func(context.Context, *csi.NodeGetCapabilitiesRequest, ...grpc.CallOption) (*csi.NodeGetCapabilitiesResponse, error)
 	nodeGetCapabilitiesMutex       sync.RWMutex
 	nodeGetCapabilitiesArgsForCall []struct {
-		ctx  context.Context
-		in   *csi.NodeGetCapabilitiesRequest
-		opts []grpc.CallOption
+		arg1 context.Context
+		arg2 *csi.NodeGetCapabilitiesRequest
+		arg3 []grpc.CallOption
 	}
 	nodeGetCapabilitiesReturns struct {
 		result1 *csi.NodeGetCapabilitiesResponse
@@ -100,12 +25,12 @@ type FakeNodeClient struct {
 		result1 *csi.NodeGetCapabilitiesResponse
 		result2 error
 	}
-	NodeGetInfoStub        func(ctx context.Context, in *csi.NodeGetInfoRequest, opts ...grpc.CallOption) (*csi.NodeGetInfoResponse, error)
+	NodeGetInfoStub        func(context.Context, *csi.NodeGetInfoRequest, ...grpc.CallOption) (*csi.NodeGetInfoResponse, error)
 	nodeGetInfoMutex       sync.RWMutex
 	nodeGetInfoArgsForCall []struct {
-		ctx  context.Context
-		in   *csi.NodeGetInfoRequest
-		opts []grpc.CallOption
+		arg1 context.Context
+		arg2 *csi.NodeGetInfoRequest
+		arg3 []grpc.CallOption
 	}
 	nodeGetInfoReturns struct {
 		result1 *csi.NodeGetInfoResponse
@@ -115,292 +40,103 @@ type FakeNodeClient struct {
 		result1 *csi.NodeGetInfoResponse
 		result2 error
 	}
+	NodeGetVolumeStatsStub        func(context.Context, *csi.NodeGetVolumeStatsRequest, ...grpc.CallOption) (*csi.NodeGetVolumeStatsResponse, error)
+	nodeGetVolumeStatsMutex       sync.RWMutex
+	nodeGetVolumeStatsArgsForCall []struct {
+		arg1 context.Context
+		arg2 *csi.NodeGetVolumeStatsRequest
+		arg3 []grpc.CallOption
+	}
+	nodeGetVolumeStatsReturns struct {
+		result1 *csi.NodeGetVolumeStatsResponse
+		result2 error
+	}
+	nodeGetVolumeStatsReturnsOnCall map[int]struct {
+		result1 *csi.NodeGetVolumeStatsResponse
+		result2 error
+	}
+	NodePublishVolumeStub        func(context.Context, *csi.NodePublishVolumeRequest, ...grpc.CallOption) (*csi.NodePublishVolumeResponse, error)
+	nodePublishVolumeMutex       sync.RWMutex
+	nodePublishVolumeArgsForCall []struct {
+		arg1 context.Context
+		arg2 *csi.NodePublishVolumeRequest
+		arg3 []grpc.CallOption
+	}
+	nodePublishVolumeReturns struct {
+		result1 *csi.NodePublishVolumeResponse
+		result2 error
+	}
+	nodePublishVolumeReturnsOnCall map[int]struct {
+		result1 *csi.NodePublishVolumeResponse
+		result2 error
+	}
+	NodeStageVolumeStub        func(context.Context, *csi.NodeStageVolumeRequest, ...grpc.CallOption) (*csi.NodeStageVolumeResponse, error)
+	nodeStageVolumeMutex       sync.RWMutex
+	nodeStageVolumeArgsForCall []struct {
+		arg1 context.Context
+		arg2 *csi.NodeStageVolumeRequest
+		arg3 []grpc.CallOption
+	}
+	nodeStageVolumeReturns struct {
+		result1 *csi.NodeStageVolumeResponse
+		result2 error
+	}
+	nodeStageVolumeReturnsOnCall map[int]struct {
+		result1 *csi.NodeStageVolumeResponse
+		result2 error
+	}
+	NodeUnpublishVolumeStub        func(context.Context, *csi.NodeUnpublishVolumeRequest, ...grpc.CallOption) (*csi.NodeUnpublishVolumeResponse, error)
+	nodeUnpublishVolumeMutex       sync.RWMutex
+	nodeUnpublishVolumeArgsForCall []struct {
+		arg1 context.Context
+		arg2 *csi.NodeUnpublishVolumeRequest
+		arg3 []grpc.CallOption
+	}
+	nodeUnpublishVolumeReturns struct {
+		result1 *csi.NodeUnpublishVolumeResponse
+		result2 error
+	}
+	nodeUnpublishVolumeReturnsOnCall map[int]struct {
+		result1 *csi.NodeUnpublishVolumeResponse
+		result2 error
+	}
+	NodeUnstageVolumeStub        func(context.Context, *csi.NodeUnstageVolumeRequest, ...grpc.CallOption) (*csi.NodeUnstageVolumeResponse, error)
+	nodeUnstageVolumeMutex       sync.RWMutex
+	nodeUnstageVolumeArgsForCall []struct {
+		arg1 context.Context
+		arg2 *csi.NodeUnstageVolumeRequest
+		arg3 []grpc.CallOption
+	}
+	nodeUnstageVolumeReturns struct {
+		result1 *csi.NodeUnstageVolumeResponse
+		result2 error
+	}
+	nodeUnstageVolumeReturnsOnCall map[int]struct {
+		result1 *csi.NodeUnstageVolumeResponse
+		result2 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *FakeNodeClient) NodeStageVolume(ctx context.Context, in *csi.NodeStageVolumeRequest, opts ...grpc.CallOption) (*csi.NodeStageVolumeResponse, error) {
-	fake.nodeStageVolumeMutex.Lock()
-	ret, specificReturn := fake.nodeStageVolumeReturnsOnCall[len(fake.nodeStageVolumeArgsForCall)]
-	fake.nodeStageVolumeArgsForCall = append(fake.nodeStageVolumeArgsForCall, struct {
-		ctx  context.Context
-		in   *csi.NodeStageVolumeRequest
-		opts []grpc.CallOption
-	}{ctx, in, opts})
-	fake.recordInvocation("NodeStageVolume", []interface{}{ctx, in, opts})
-	fake.nodeStageVolumeMutex.Unlock()
-	if fake.NodeStageVolumeStub != nil {
-		return fake.NodeStageVolumeStub(ctx, in, opts...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.nodeStageVolumeReturns.result1, fake.nodeStageVolumeReturns.result2
-}
-
-func (fake *FakeNodeClient) NodeStageVolumeCallCount() int {
-	fake.nodeStageVolumeMutex.RLock()
-	defer fake.nodeStageVolumeMutex.RUnlock()
-	return len(fake.nodeStageVolumeArgsForCall)
-}
-
-func (fake *FakeNodeClient) NodeStageVolumeArgsForCall(i int) (context.Context, *csi.NodeStageVolumeRequest, []grpc.CallOption) {
-	fake.nodeStageVolumeMutex.RLock()
-	defer fake.nodeStageVolumeMutex.RUnlock()
-	return fake.nodeStageVolumeArgsForCall[i].ctx, fake.nodeStageVolumeArgsForCall[i].in, fake.nodeStageVolumeArgsForCall[i].opts
-}
-
-func (fake *FakeNodeClient) NodeStageVolumeReturns(result1 *csi.NodeStageVolumeResponse, result2 error) {
-	fake.NodeStageVolumeStub = nil
-	fake.nodeStageVolumeReturns = struct {
-		result1 *csi.NodeStageVolumeResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeNodeClient) NodeStageVolumeReturnsOnCall(i int, result1 *csi.NodeStageVolumeResponse, result2 error) {
-	fake.NodeStageVolumeStub = nil
-	if fake.nodeStageVolumeReturnsOnCall == nil {
-		fake.nodeStageVolumeReturnsOnCall = make(map[int]struct {
-			result1 *csi.NodeStageVolumeResponse
-			result2 error
-		})
-	}
-	fake.nodeStageVolumeReturnsOnCall[i] = struct {
-		result1 *csi.NodeStageVolumeResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeNodeClient) NodeUnstageVolume(ctx context.Context, in *csi.NodeUnstageVolumeRequest, opts ...grpc.CallOption) (*csi.NodeUnstageVolumeResponse, error) {
-	fake.nodeUnstageVolumeMutex.Lock()
-	ret, specificReturn := fake.nodeUnstageVolumeReturnsOnCall[len(fake.nodeUnstageVolumeArgsForCall)]
-	fake.nodeUnstageVolumeArgsForCall = append(fake.nodeUnstageVolumeArgsForCall, struct {
-		ctx  context.Context
-		in   *csi.NodeUnstageVolumeRequest
-		opts []grpc.CallOption
-	}{ctx, in, opts})
-	fake.recordInvocation("NodeUnstageVolume", []interface{}{ctx, in, opts})
-	fake.nodeUnstageVolumeMutex.Unlock()
-	if fake.NodeUnstageVolumeStub != nil {
-		return fake.NodeUnstageVolumeStub(ctx, in, opts...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.nodeUnstageVolumeReturns.result1, fake.nodeUnstageVolumeReturns.result2
-}
-
-func (fake *FakeNodeClient) NodeUnstageVolumeCallCount() int {
-	fake.nodeUnstageVolumeMutex.RLock()
-	defer fake.nodeUnstageVolumeMutex.RUnlock()
-	return len(fake.nodeUnstageVolumeArgsForCall)
-}
-
-func (fake *FakeNodeClient) NodeUnstageVolumeArgsForCall(i int) (context.Context, *csi.NodeUnstageVolumeRequest, []grpc.CallOption) {
-	fake.nodeUnstageVolumeMutex.RLock()
-	defer fake.nodeUnstageVolumeMutex.RUnlock()
-	return fake.nodeUnstageVolumeArgsForCall[i].ctx, fake.nodeUnstageVolumeArgsForCall[i].in, fake.nodeUnstageVolumeArgsForCall[i].opts
-}
-
-func (fake *FakeNodeClient) NodeUnstageVolumeReturns(result1 *csi.NodeUnstageVolumeResponse, result2 error) {
-	fake.NodeUnstageVolumeStub = nil
-	fake.nodeUnstageVolumeReturns = struct {
-		result1 *csi.NodeUnstageVolumeResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeNodeClient) NodeUnstageVolumeReturnsOnCall(i int, result1 *csi.NodeUnstageVolumeResponse, result2 error) {
-	fake.NodeUnstageVolumeStub = nil
-	if fake.nodeUnstageVolumeReturnsOnCall == nil {
-		fake.nodeUnstageVolumeReturnsOnCall = make(map[int]struct {
-			result1 *csi.NodeUnstageVolumeResponse
-			result2 error
-		})
-	}
-	fake.nodeUnstageVolumeReturnsOnCall[i] = struct {
-		result1 *csi.NodeUnstageVolumeResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeNodeClient) NodePublishVolume(ctx context.Context, in *csi.NodePublishVolumeRequest, opts ...grpc.CallOption) (*csi.NodePublishVolumeResponse, error) {
-	fake.nodePublishVolumeMutex.Lock()
-	ret, specificReturn := fake.nodePublishVolumeReturnsOnCall[len(fake.nodePublishVolumeArgsForCall)]
-	fake.nodePublishVolumeArgsForCall = append(fake.nodePublishVolumeArgsForCall, struct {
-		ctx  context.Context
-		in   *csi.NodePublishVolumeRequest
-		opts []grpc.CallOption
-	}{ctx, in, opts})
-	fake.recordInvocation("NodePublishVolume", []interface{}{ctx, in, opts})
-	fake.nodePublishVolumeMutex.Unlock()
-	if fake.NodePublishVolumeStub != nil {
-		return fake.NodePublishVolumeStub(ctx, in, opts...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.nodePublishVolumeReturns.result1, fake.nodePublishVolumeReturns.result2
-}
-
-func (fake *FakeNodeClient) NodePublishVolumeCallCount() int {
-	fake.nodePublishVolumeMutex.RLock()
-	defer fake.nodePublishVolumeMutex.RUnlock()
-	return len(fake.nodePublishVolumeArgsForCall)
-}
-
-func (fake *FakeNodeClient) NodePublishVolumeArgsForCall(i int) (context.Context, *csi.NodePublishVolumeRequest, []grpc.CallOption) {
-	fake.nodePublishVolumeMutex.RLock()
-	defer fake.nodePublishVolumeMutex.RUnlock()
-	return fake.nodePublishVolumeArgsForCall[i].ctx, fake.nodePublishVolumeArgsForCall[i].in, fake.nodePublishVolumeArgsForCall[i].opts
-}
-
-func (fake *FakeNodeClient) NodePublishVolumeReturns(result1 *csi.NodePublishVolumeResponse, result2 error) {
-	fake.NodePublishVolumeStub = nil
-	fake.nodePublishVolumeReturns = struct {
-		result1 *csi.NodePublishVolumeResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeNodeClient) NodePublishVolumeReturnsOnCall(i int, result1 *csi.NodePublishVolumeResponse, result2 error) {
-	fake.NodePublishVolumeStub = nil
-	if fake.nodePublishVolumeReturnsOnCall == nil {
-		fake.nodePublishVolumeReturnsOnCall = make(map[int]struct {
-			result1 *csi.NodePublishVolumeResponse
-			result2 error
-		})
-	}
-	fake.nodePublishVolumeReturnsOnCall[i] = struct {
-		result1 *csi.NodePublishVolumeResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeNodeClient) NodeUnpublishVolume(ctx context.Context, in *csi.NodeUnpublishVolumeRequest, opts ...grpc.CallOption) (*csi.NodeUnpublishVolumeResponse, error) {
-	fake.nodeUnpublishVolumeMutex.Lock()
-	ret, specificReturn := fake.nodeUnpublishVolumeReturnsOnCall[len(fake.nodeUnpublishVolumeArgsForCall)]
-	fake.nodeUnpublishVolumeArgsForCall = append(fake.nodeUnpublishVolumeArgsForCall, struct {
-		ctx  context.Context
-		in   *csi.NodeUnpublishVolumeRequest
-		opts []grpc.CallOption
-	}{ctx, in, opts})
-	fake.recordInvocation("NodeUnpublishVolume", []interface{}{ctx, in, opts})
-	fake.nodeUnpublishVolumeMutex.Unlock()
-	if fake.NodeUnpublishVolumeStub != nil {
-		return fake.NodeUnpublishVolumeStub(ctx, in, opts...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.nodeUnpublishVolumeReturns.result1, fake.nodeUnpublishVolumeReturns.result2
-}
-
-func (fake *FakeNodeClient) NodeUnpublishVolumeCallCount() int {
-	fake.nodeUnpublishVolumeMutex.RLock()
-	defer fake.nodeUnpublishVolumeMutex.RUnlock()
-	return len(fake.nodeUnpublishVolumeArgsForCall)
-}
-
-func (fake *FakeNodeClient) NodeUnpublishVolumeArgsForCall(i int) (context.Context, *csi.NodeUnpublishVolumeRequest, []grpc.CallOption) {
-	fake.nodeUnpublishVolumeMutex.RLock()
-	defer fake.nodeUnpublishVolumeMutex.RUnlock()
-	return fake.nodeUnpublishVolumeArgsForCall[i].ctx, fake.nodeUnpublishVolumeArgsForCall[i].in, fake.nodeUnpublishVolumeArgsForCall[i].opts
-}
-
-func (fake *FakeNodeClient) NodeUnpublishVolumeReturns(result1 *csi.NodeUnpublishVolumeResponse, result2 error) {
-	fake.NodeUnpublishVolumeStub = nil
-	fake.nodeUnpublishVolumeReturns = struct {
-		result1 *csi.NodeUnpublishVolumeResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeNodeClient) NodeUnpublishVolumeReturnsOnCall(i int, result1 *csi.NodeUnpublishVolumeResponse, result2 error) {
-	fake.NodeUnpublishVolumeStub = nil
-	if fake.nodeUnpublishVolumeReturnsOnCall == nil {
-		fake.nodeUnpublishVolumeReturnsOnCall = make(map[int]struct {
-			result1 *csi.NodeUnpublishVolumeResponse
-			result2 error
-		})
-	}
-	fake.nodeUnpublishVolumeReturnsOnCall[i] = struct {
-		result1 *csi.NodeUnpublishVolumeResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeNodeClient) NodeGetId(ctx context.Context, in *csi.NodeGetIdRequest, opts ...grpc.CallOption) (*csi.NodeGetIdResponse, error) {
-	fake.nodeGetIdMutex.Lock()
-	ret, specificReturn := fake.nodeGetIdReturnsOnCall[len(fake.nodeGetIdArgsForCall)]
-	fake.nodeGetIdArgsForCall = append(fake.nodeGetIdArgsForCall, struct {
-		ctx  context.Context
-		in   *csi.NodeGetIdRequest
-		opts []grpc.CallOption
-	}{ctx, in, opts})
-	fake.recordInvocation("NodeGetId", []interface{}{ctx, in, opts})
-	fake.nodeGetIdMutex.Unlock()
-	if fake.NodeGetIdStub != nil {
-		return fake.NodeGetIdStub(ctx, in, opts...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.nodeGetIdReturns.result1, fake.nodeGetIdReturns.result2
-}
-
-func (fake *FakeNodeClient) NodeGetIdCallCount() int {
-	fake.nodeGetIdMutex.RLock()
-	defer fake.nodeGetIdMutex.RUnlock()
-	return len(fake.nodeGetIdArgsForCall)
-}
-
-func (fake *FakeNodeClient) NodeGetIdArgsForCall(i int) (context.Context, *csi.NodeGetIdRequest, []grpc.CallOption) {
-	fake.nodeGetIdMutex.RLock()
-	defer fake.nodeGetIdMutex.RUnlock()
-	return fake.nodeGetIdArgsForCall[i].ctx, fake.nodeGetIdArgsForCall[i].in, fake.nodeGetIdArgsForCall[i].opts
-}
-
-func (fake *FakeNodeClient) NodeGetIdReturns(result1 *csi.NodeGetIdResponse, result2 error) {
-	fake.NodeGetIdStub = nil
-	fake.nodeGetIdReturns = struct {
-		result1 *csi.NodeGetIdResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeNodeClient) NodeGetIdReturnsOnCall(i int, result1 *csi.NodeGetIdResponse, result2 error) {
-	fake.NodeGetIdStub = nil
-	if fake.nodeGetIdReturnsOnCall == nil {
-		fake.nodeGetIdReturnsOnCall = make(map[int]struct {
-			result1 *csi.NodeGetIdResponse
-			result2 error
-		})
-	}
-	fake.nodeGetIdReturnsOnCall[i] = struct {
-		result1 *csi.NodeGetIdResponse
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeNodeClient) NodeGetCapabilities(ctx context.Context, in *csi.NodeGetCapabilitiesRequest, opts ...grpc.CallOption) (*csi.NodeGetCapabilitiesResponse, error) {
+func (fake *FakeNodeClient) NodeGetCapabilities(arg1 context.Context, arg2 *csi.NodeGetCapabilitiesRequest, arg3 ...grpc.CallOption) (*csi.NodeGetCapabilitiesResponse, error) {
 	fake.nodeGetCapabilitiesMutex.Lock()
 	ret, specificReturn := fake.nodeGetCapabilitiesReturnsOnCall[len(fake.nodeGetCapabilitiesArgsForCall)]
 	fake.nodeGetCapabilitiesArgsForCall = append(fake.nodeGetCapabilitiesArgsForCall, struct {
-		ctx  context.Context
-		in   *csi.NodeGetCapabilitiesRequest
-		opts []grpc.CallOption
-	}{ctx, in, opts})
-	fake.recordInvocation("NodeGetCapabilities", []interface{}{ctx, in, opts})
+		arg1 context.Context
+		arg2 *csi.NodeGetCapabilitiesRequest
+		arg3 []grpc.CallOption
+	}{arg1, arg2, arg3})
+	fake.recordInvocation("NodeGetCapabilities", []interface{}{arg1, arg2, arg3})
 	fake.nodeGetCapabilitiesMutex.Unlock()
 	if fake.NodeGetCapabilitiesStub != nil {
-		return fake.NodeGetCapabilitiesStub(ctx, in, opts...)
+		return fake.NodeGetCapabilitiesStub(arg1, arg2, arg3...)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.nodeGetCapabilitiesReturns.result1, fake.nodeGetCapabilitiesReturns.result2
+	fakeReturns := fake.nodeGetCapabilitiesReturns
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeNodeClient) NodeGetCapabilitiesCallCount() int {
@@ -409,13 +145,22 @@ func (fake *FakeNodeClient) NodeGetCapabilitiesCallCount() int {
 	return len(fake.nodeGetCapabilitiesArgsForCall)
 }
 
+func (fake *FakeNodeClient) NodeGetCapabilitiesCalls(stub func(context.Context, *csi.NodeGetCapabilitiesRequest, ...grpc.CallOption) (*csi.NodeGetCapabilitiesResponse, error)) {
+	fake.nodeGetCapabilitiesMutex.Lock()
+	defer fake.nodeGetCapabilitiesMutex.Unlock()
+	fake.NodeGetCapabilitiesStub = stub
+}
+
 func (fake *FakeNodeClient) NodeGetCapabilitiesArgsForCall(i int) (context.Context, *csi.NodeGetCapabilitiesRequest, []grpc.CallOption) {
 	fake.nodeGetCapabilitiesMutex.RLock()
 	defer fake.nodeGetCapabilitiesMutex.RUnlock()
-	return fake.nodeGetCapabilitiesArgsForCall[i].ctx, fake.nodeGetCapabilitiesArgsForCall[i].in, fake.nodeGetCapabilitiesArgsForCall[i].opts
+	argsForCall := fake.nodeGetCapabilitiesArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
 }
 
 func (fake *FakeNodeClient) NodeGetCapabilitiesReturns(result1 *csi.NodeGetCapabilitiesResponse, result2 error) {
+	fake.nodeGetCapabilitiesMutex.Lock()
+	defer fake.nodeGetCapabilitiesMutex.Unlock()
 	fake.NodeGetCapabilitiesStub = nil
 	fake.nodeGetCapabilitiesReturns = struct {
 		result1 *csi.NodeGetCapabilitiesResponse
@@ -424,6 +169,8 @@ func (fake *FakeNodeClient) NodeGetCapabilitiesReturns(result1 *csi.NodeGetCapab
 }
 
 func (fake *FakeNodeClient) NodeGetCapabilitiesReturnsOnCall(i int, result1 *csi.NodeGetCapabilitiesResponse, result2 error) {
+	fake.nodeGetCapabilitiesMutex.Lock()
+	defer fake.nodeGetCapabilitiesMutex.Unlock()
 	fake.NodeGetCapabilitiesStub = nil
 	if fake.nodeGetCapabilitiesReturnsOnCall == nil {
 		fake.nodeGetCapabilitiesReturnsOnCall = make(map[int]struct {
@@ -437,23 +184,24 @@ func (fake *FakeNodeClient) NodeGetCapabilitiesReturnsOnCall(i int, result1 *csi
 	}{result1, result2}
 }
 
-func (fake *FakeNodeClient) NodeGetInfo(ctx context.Context, in *csi.NodeGetInfoRequest, opts ...grpc.CallOption) (*csi.NodeGetInfoResponse, error) {
+func (fake *FakeNodeClient) NodeGetInfo(arg1 context.Context, arg2 *csi.NodeGetInfoRequest, arg3 ...grpc.CallOption) (*csi.NodeGetInfoResponse, error) {
 	fake.nodeGetInfoMutex.Lock()
 	ret, specificReturn := fake.nodeGetInfoReturnsOnCall[len(fake.nodeGetInfoArgsForCall)]
 	fake.nodeGetInfoArgsForCall = append(fake.nodeGetInfoArgsForCall, struct {
-		ctx  context.Context
-		in   *csi.NodeGetInfoRequest
-		opts []grpc.CallOption
-	}{ctx, in, opts})
-	fake.recordInvocation("NodeGetInfo", []interface{}{ctx, in, opts})
+		arg1 context.Context
+		arg2 *csi.NodeGetInfoRequest
+		arg3 []grpc.CallOption
+	}{arg1, arg2, arg3})
+	fake.recordInvocation("NodeGetInfo", []interface{}{arg1, arg2, arg3})
 	fake.nodeGetInfoMutex.Unlock()
 	if fake.NodeGetInfoStub != nil {
-		return fake.NodeGetInfoStub(ctx, in, opts...)
+		return fake.NodeGetInfoStub(arg1, arg2, arg3...)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.nodeGetInfoReturns.result1, fake.nodeGetInfoReturns.result2
+	fakeReturns := fake.nodeGetInfoReturns
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeNodeClient) NodeGetInfoCallCount() int {
@@ -462,13 +210,22 @@ func (fake *FakeNodeClient) NodeGetInfoCallCount() int {
 	return len(fake.nodeGetInfoArgsForCall)
 }
 
+func (fake *FakeNodeClient) NodeGetInfoCalls(stub func(context.Context, *csi.NodeGetInfoRequest, ...grpc.CallOption) (*csi.NodeGetInfoResponse, error)) {
+	fake.nodeGetInfoMutex.Lock()
+	defer fake.nodeGetInfoMutex.Unlock()
+	fake.NodeGetInfoStub = stub
+}
+
 func (fake *FakeNodeClient) NodeGetInfoArgsForCall(i int) (context.Context, *csi.NodeGetInfoRequest, []grpc.CallOption) {
 	fake.nodeGetInfoMutex.RLock()
 	defer fake.nodeGetInfoMutex.RUnlock()
-	return fake.nodeGetInfoArgsForCall[i].ctx, fake.nodeGetInfoArgsForCall[i].in, fake.nodeGetInfoArgsForCall[i].opts
+	argsForCall := fake.nodeGetInfoArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
 }
 
 func (fake *FakeNodeClient) NodeGetInfoReturns(result1 *csi.NodeGetInfoResponse, result2 error) {
+	fake.nodeGetInfoMutex.Lock()
+	defer fake.nodeGetInfoMutex.Unlock()
 	fake.NodeGetInfoStub = nil
 	fake.nodeGetInfoReturns = struct {
 		result1 *csi.NodeGetInfoResponse
@@ -477,6 +234,8 @@ func (fake *FakeNodeClient) NodeGetInfoReturns(result1 *csi.NodeGetInfoResponse,
 }
 
 func (fake *FakeNodeClient) NodeGetInfoReturnsOnCall(i int, result1 *csi.NodeGetInfoResponse, result2 error) {
+	fake.nodeGetInfoMutex.Lock()
+	defer fake.nodeGetInfoMutex.Unlock()
 	fake.NodeGetInfoStub = nil
 	if fake.nodeGetInfoReturnsOnCall == nil {
 		fake.nodeGetInfoReturnsOnCall = make(map[int]struct {
@@ -490,23 +249,348 @@ func (fake *FakeNodeClient) NodeGetInfoReturnsOnCall(i int, result1 *csi.NodeGet
 	}{result1, result2}
 }
 
+func (fake *FakeNodeClient) NodeGetVolumeStats(arg1 context.Context, arg2 *csi.NodeGetVolumeStatsRequest, arg3 ...grpc.CallOption) (*csi.NodeGetVolumeStatsResponse, error) {
+	fake.nodeGetVolumeStatsMutex.Lock()
+	ret, specificReturn := fake.nodeGetVolumeStatsReturnsOnCall[len(fake.nodeGetVolumeStatsArgsForCall)]
+	fake.nodeGetVolumeStatsArgsForCall = append(fake.nodeGetVolumeStatsArgsForCall, struct {
+		arg1 context.Context
+		arg2 *csi.NodeGetVolumeStatsRequest
+		arg3 []grpc.CallOption
+	}{arg1, arg2, arg3})
+	fake.recordInvocation("NodeGetVolumeStats", []interface{}{arg1, arg2, arg3})
+	fake.nodeGetVolumeStatsMutex.Unlock()
+	if fake.NodeGetVolumeStatsStub != nil {
+		return fake.NodeGetVolumeStatsStub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.nodeGetVolumeStatsReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeNodeClient) NodeGetVolumeStatsCallCount() int {
+	fake.nodeGetVolumeStatsMutex.RLock()
+	defer fake.nodeGetVolumeStatsMutex.RUnlock()
+	return len(fake.nodeGetVolumeStatsArgsForCall)
+}
+
+func (fake *FakeNodeClient) NodeGetVolumeStatsCalls(stub func(context.Context, *csi.NodeGetVolumeStatsRequest, ...grpc.CallOption) (*csi.NodeGetVolumeStatsResponse, error)) {
+	fake.nodeGetVolumeStatsMutex.Lock()
+	defer fake.nodeGetVolumeStatsMutex.Unlock()
+	fake.NodeGetVolumeStatsStub = stub
+}
+
+func (fake *FakeNodeClient) NodeGetVolumeStatsArgsForCall(i int) (context.Context, *csi.NodeGetVolumeStatsRequest, []grpc.CallOption) {
+	fake.nodeGetVolumeStatsMutex.RLock()
+	defer fake.nodeGetVolumeStatsMutex.RUnlock()
+	argsForCall := fake.nodeGetVolumeStatsArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeNodeClient) NodeGetVolumeStatsReturns(result1 *csi.NodeGetVolumeStatsResponse, result2 error) {
+	fake.nodeGetVolumeStatsMutex.Lock()
+	defer fake.nodeGetVolumeStatsMutex.Unlock()
+	fake.NodeGetVolumeStatsStub = nil
+	fake.nodeGetVolumeStatsReturns = struct {
+		result1 *csi.NodeGetVolumeStatsResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeNodeClient) NodeGetVolumeStatsReturnsOnCall(i int, result1 *csi.NodeGetVolumeStatsResponse, result2 error) {
+	fake.nodeGetVolumeStatsMutex.Lock()
+	defer fake.nodeGetVolumeStatsMutex.Unlock()
+	fake.NodeGetVolumeStatsStub = nil
+	if fake.nodeGetVolumeStatsReturnsOnCall == nil {
+		fake.nodeGetVolumeStatsReturnsOnCall = make(map[int]struct {
+			result1 *csi.NodeGetVolumeStatsResponse
+			result2 error
+		})
+	}
+	fake.nodeGetVolumeStatsReturnsOnCall[i] = struct {
+		result1 *csi.NodeGetVolumeStatsResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeNodeClient) NodePublishVolume(arg1 context.Context, arg2 *csi.NodePublishVolumeRequest, arg3 ...grpc.CallOption) (*csi.NodePublishVolumeResponse, error) {
+	fake.nodePublishVolumeMutex.Lock()
+	ret, specificReturn := fake.nodePublishVolumeReturnsOnCall[len(fake.nodePublishVolumeArgsForCall)]
+	fake.nodePublishVolumeArgsForCall = append(fake.nodePublishVolumeArgsForCall, struct {
+		arg1 context.Context
+		arg2 *csi.NodePublishVolumeRequest
+		arg3 []grpc.CallOption
+	}{arg1, arg2, arg3})
+	fake.recordInvocation("NodePublishVolume", []interface{}{arg1, arg2, arg3})
+	fake.nodePublishVolumeMutex.Unlock()
+	if fake.NodePublishVolumeStub != nil {
+		return fake.NodePublishVolumeStub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.nodePublishVolumeReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeNodeClient) NodePublishVolumeCallCount() int {
+	fake.nodePublishVolumeMutex.RLock()
+	defer fake.nodePublishVolumeMutex.RUnlock()
+	return len(fake.nodePublishVolumeArgsForCall)
+}
+
+func (fake *FakeNodeClient) NodePublishVolumeCalls(stub func(context.Context, *csi.NodePublishVolumeRequest, ...grpc.CallOption) (*csi.NodePublishVolumeResponse, error)) {
+	fake.nodePublishVolumeMutex.Lock()
+	defer fake.nodePublishVolumeMutex.Unlock()
+	fake.NodePublishVolumeStub = stub
+}
+
+func (fake *FakeNodeClient) NodePublishVolumeArgsForCall(i int) (context.Context, *csi.NodePublishVolumeRequest, []grpc.CallOption) {
+	fake.nodePublishVolumeMutex.RLock()
+	defer fake.nodePublishVolumeMutex.RUnlock()
+	argsForCall := fake.nodePublishVolumeArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeNodeClient) NodePublishVolumeReturns(result1 *csi.NodePublishVolumeResponse, result2 error) {
+	fake.nodePublishVolumeMutex.Lock()
+	defer fake.nodePublishVolumeMutex.Unlock()
+	fake.NodePublishVolumeStub = nil
+	fake.nodePublishVolumeReturns = struct {
+		result1 *csi.NodePublishVolumeResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeNodeClient) NodePublishVolumeReturnsOnCall(i int, result1 *csi.NodePublishVolumeResponse, result2 error) {
+	fake.nodePublishVolumeMutex.Lock()
+	defer fake.nodePublishVolumeMutex.Unlock()
+	fake.NodePublishVolumeStub = nil
+	if fake.nodePublishVolumeReturnsOnCall == nil {
+		fake.nodePublishVolumeReturnsOnCall = make(map[int]struct {
+			result1 *csi.NodePublishVolumeResponse
+			result2 error
+		})
+	}
+	fake.nodePublishVolumeReturnsOnCall[i] = struct {
+		result1 *csi.NodePublishVolumeResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeNodeClient) NodeStageVolume(arg1 context.Context, arg2 *csi.NodeStageVolumeRequest, arg3 ...grpc.CallOption) (*csi.NodeStageVolumeResponse, error) {
+	fake.nodeStageVolumeMutex.Lock()
+	ret, specificReturn := fake.nodeStageVolumeReturnsOnCall[len(fake.nodeStageVolumeArgsForCall)]
+	fake.nodeStageVolumeArgsForCall = append(fake.nodeStageVolumeArgsForCall, struct {
+		arg1 context.Context
+		arg2 *csi.NodeStageVolumeRequest
+		arg3 []grpc.CallOption
+	}{arg1, arg2, arg3})
+	fake.recordInvocation("NodeStageVolume", []interface{}{arg1, arg2, arg3})
+	fake.nodeStageVolumeMutex.Unlock()
+	if fake.NodeStageVolumeStub != nil {
+		return fake.NodeStageVolumeStub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.nodeStageVolumeReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeNodeClient) NodeStageVolumeCallCount() int {
+	fake.nodeStageVolumeMutex.RLock()
+	defer fake.nodeStageVolumeMutex.RUnlock()
+	return len(fake.nodeStageVolumeArgsForCall)
+}
+
+func (fake *FakeNodeClient) NodeStageVolumeCalls(stub func(context.Context, *csi.NodeStageVolumeRequest, ...grpc.CallOption) (*csi.NodeStageVolumeResponse, error)) {
+	fake.nodeStageVolumeMutex.Lock()
+	defer fake.nodeStageVolumeMutex.Unlock()
+	fake.NodeStageVolumeStub = stub
+}
+
+func (fake *FakeNodeClient) NodeStageVolumeArgsForCall(i int) (context.Context, *csi.NodeStageVolumeRequest, []grpc.CallOption) {
+	fake.nodeStageVolumeMutex.RLock()
+	defer fake.nodeStageVolumeMutex.RUnlock()
+	argsForCall := fake.nodeStageVolumeArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeNodeClient) NodeStageVolumeReturns(result1 *csi.NodeStageVolumeResponse, result2 error) {
+	fake.nodeStageVolumeMutex.Lock()
+	defer fake.nodeStageVolumeMutex.Unlock()
+	fake.NodeStageVolumeStub = nil
+	fake.nodeStageVolumeReturns = struct {
+		result1 *csi.NodeStageVolumeResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeNodeClient) NodeStageVolumeReturnsOnCall(i int, result1 *csi.NodeStageVolumeResponse, result2 error) {
+	fake.nodeStageVolumeMutex.Lock()
+	defer fake.nodeStageVolumeMutex.Unlock()
+	fake.NodeStageVolumeStub = nil
+	if fake.nodeStageVolumeReturnsOnCall == nil {
+		fake.nodeStageVolumeReturnsOnCall = make(map[int]struct {
+			result1 *csi.NodeStageVolumeResponse
+			result2 error
+		})
+	}
+	fake.nodeStageVolumeReturnsOnCall[i] = struct {
+		result1 *csi.NodeStageVolumeResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeNodeClient) NodeUnpublishVolume(arg1 context.Context, arg2 *csi.NodeUnpublishVolumeRequest, arg3 ...grpc.CallOption) (*csi.NodeUnpublishVolumeResponse, error) {
+	fake.nodeUnpublishVolumeMutex.Lock()
+	ret, specificReturn := fake.nodeUnpublishVolumeReturnsOnCall[len(fake.nodeUnpublishVolumeArgsForCall)]
+	fake.nodeUnpublishVolumeArgsForCall = append(fake.nodeUnpublishVolumeArgsForCall, struct {
+		arg1 context.Context
+		arg2 *csi.NodeUnpublishVolumeRequest
+		arg3 []grpc.CallOption
+	}{arg1, arg2, arg3})
+	fake.recordInvocation("NodeUnpublishVolume", []interface{}{arg1, arg2, arg3})
+	fake.nodeUnpublishVolumeMutex.Unlock()
+	if fake.NodeUnpublishVolumeStub != nil {
+		return fake.NodeUnpublishVolumeStub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.nodeUnpublishVolumeReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeNodeClient) NodeUnpublishVolumeCallCount() int {
+	fake.nodeUnpublishVolumeMutex.RLock()
+	defer fake.nodeUnpublishVolumeMutex.RUnlock()
+	return len(fake.nodeUnpublishVolumeArgsForCall)
+}
+
+func (fake *FakeNodeClient) NodeUnpublishVolumeCalls(stub func(context.Context, *csi.NodeUnpublishVolumeRequest, ...grpc.CallOption) (*csi.NodeUnpublishVolumeResponse, error)) {
+	fake.nodeUnpublishVolumeMutex.Lock()
+	defer fake.nodeUnpublishVolumeMutex.Unlock()
+	fake.NodeUnpublishVolumeStub = stub
+}
+
+func (fake *FakeNodeClient) NodeUnpublishVolumeArgsForCall(i int) (context.Context, *csi.NodeUnpublishVolumeRequest, []grpc.CallOption) {
+	fake.nodeUnpublishVolumeMutex.RLock()
+	defer fake.nodeUnpublishVolumeMutex.RUnlock()
+	argsForCall := fake.nodeUnpublishVolumeArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeNodeClient) NodeUnpublishVolumeReturns(result1 *csi.NodeUnpublishVolumeResponse, result2 error) {
+	fake.nodeUnpublishVolumeMutex.Lock()
+	defer fake.nodeUnpublishVolumeMutex.Unlock()
+	fake.NodeUnpublishVolumeStub = nil
+	fake.nodeUnpublishVolumeReturns = struct {
+		result1 *csi.NodeUnpublishVolumeResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeNodeClient) NodeUnpublishVolumeReturnsOnCall(i int, result1 *csi.NodeUnpublishVolumeResponse, result2 error) {
+	fake.nodeUnpublishVolumeMutex.Lock()
+	defer fake.nodeUnpublishVolumeMutex.Unlock()
+	fake.NodeUnpublishVolumeStub = nil
+	if fake.nodeUnpublishVolumeReturnsOnCall == nil {
+		fake.nodeUnpublishVolumeReturnsOnCall = make(map[int]struct {
+			result1 *csi.NodeUnpublishVolumeResponse
+			result2 error
+		})
+	}
+	fake.nodeUnpublishVolumeReturnsOnCall[i] = struct {
+		result1 *csi.NodeUnpublishVolumeResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeNodeClient) NodeUnstageVolume(arg1 context.Context, arg2 *csi.NodeUnstageVolumeRequest, arg3 ...grpc.CallOption) (*csi.NodeUnstageVolumeResponse, error) {
+	fake.nodeUnstageVolumeMutex.Lock()
+	ret, specificReturn := fake.nodeUnstageVolumeReturnsOnCall[len(fake.nodeUnstageVolumeArgsForCall)]
+	fake.nodeUnstageVolumeArgsForCall = append(fake.nodeUnstageVolumeArgsForCall, struct {
+		arg1 context.Context
+		arg2 *csi.NodeUnstageVolumeRequest
+		arg3 []grpc.CallOption
+	}{arg1, arg2, arg3})
+	fake.recordInvocation("NodeUnstageVolume", []interface{}{arg1, arg2, arg3})
+	fake.nodeUnstageVolumeMutex.Unlock()
+	if fake.NodeUnstageVolumeStub != nil {
+		return fake.NodeUnstageVolumeStub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	fakeReturns := fake.nodeUnstageVolumeReturns
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeNodeClient) NodeUnstageVolumeCallCount() int {
+	fake.nodeUnstageVolumeMutex.RLock()
+	defer fake.nodeUnstageVolumeMutex.RUnlock()
+	return len(fake.nodeUnstageVolumeArgsForCall)
+}
+
+func (fake *FakeNodeClient) NodeUnstageVolumeCalls(stub func(context.Context, *csi.NodeUnstageVolumeRequest, ...grpc.CallOption) (*csi.NodeUnstageVolumeResponse, error)) {
+	fake.nodeUnstageVolumeMutex.Lock()
+	defer fake.nodeUnstageVolumeMutex.Unlock()
+	fake.NodeUnstageVolumeStub = stub
+}
+
+func (fake *FakeNodeClient) NodeUnstageVolumeArgsForCall(i int) (context.Context, *csi.NodeUnstageVolumeRequest, []grpc.CallOption) {
+	fake.nodeUnstageVolumeMutex.RLock()
+	defer fake.nodeUnstageVolumeMutex.RUnlock()
+	argsForCall := fake.nodeUnstageVolumeArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeNodeClient) NodeUnstageVolumeReturns(result1 *csi.NodeUnstageVolumeResponse, result2 error) {
+	fake.nodeUnstageVolumeMutex.Lock()
+	defer fake.nodeUnstageVolumeMutex.Unlock()
+	fake.NodeUnstageVolumeStub = nil
+	fake.nodeUnstageVolumeReturns = struct {
+		result1 *csi.NodeUnstageVolumeResponse
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeNodeClient) NodeUnstageVolumeReturnsOnCall(i int, result1 *csi.NodeUnstageVolumeResponse, result2 error) {
+	fake.nodeUnstageVolumeMutex.Lock()
+	defer fake.nodeUnstageVolumeMutex.Unlock()
+	fake.NodeUnstageVolumeStub = nil
+	if fake.nodeUnstageVolumeReturnsOnCall == nil {
+		fake.nodeUnstageVolumeReturnsOnCall = make(map[int]struct {
+			result1 *csi.NodeUnstageVolumeResponse
+			result2 error
+		})
+	}
+	fake.nodeUnstageVolumeReturnsOnCall[i] = struct {
+		result1 *csi.NodeUnstageVolumeResponse
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeNodeClient) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
-	fake.nodeStageVolumeMutex.RLock()
-	defer fake.nodeStageVolumeMutex.RUnlock()
-	fake.nodeUnstageVolumeMutex.RLock()
-	defer fake.nodeUnstageVolumeMutex.RUnlock()
-	fake.nodePublishVolumeMutex.RLock()
-	defer fake.nodePublishVolumeMutex.RUnlock()
-	fake.nodeUnpublishVolumeMutex.RLock()
-	defer fake.nodeUnpublishVolumeMutex.RUnlock()
-	fake.nodeGetIdMutex.RLock()
-	defer fake.nodeGetIdMutex.RUnlock()
 	fake.nodeGetCapabilitiesMutex.RLock()
 	defer fake.nodeGetCapabilitiesMutex.RUnlock()
 	fake.nodeGetInfoMutex.RLock()
 	defer fake.nodeGetInfoMutex.RUnlock()
+	fake.nodeGetVolumeStatsMutex.RLock()
+	defer fake.nodeGetVolumeStatsMutex.RUnlock()
+	fake.nodePublishVolumeMutex.RLock()
+	defer fake.nodePublishVolumeMutex.RUnlock()
+	fake.nodeStageVolumeMutex.RLock()
+	defer fake.nodeStageVolumeMutex.RUnlock()
+	fake.nodeUnpublishVolumeMutex.RLock()
+	defer fake.nodeUnpublishVolumeMutex.RUnlock()
+	fake.nodeUnstageVolumeMutex.RLock()
+	defer fake.nodeUnstageVolumeMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

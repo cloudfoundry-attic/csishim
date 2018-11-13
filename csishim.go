@@ -4,7 +4,7 @@ package csishim
 
 import (
 	"code.cloudfoundry.org/goshims/grpcshim"
-	"github.com/container-storage-interface/spec/lib/go/csi/v0"
+	"github.com/container-storage-interface/spec/lib/go/csi"
 	"google.golang.org/grpc"
 )
 
